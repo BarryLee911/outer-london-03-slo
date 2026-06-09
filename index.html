@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>South London Orbital Link</title>
+    <meta
+      name="description"
+      content="MVP route overlay for Outer London 03 — South London Orbital Link."
+    />
+    <link rel="stylesheet" href="styles.css?v=3" />
+  </head>
+  <body>
+    <a class="skip-link" href="#problem">Skip to project details</a>
+
+    <header class="site-nav" aria-label="Primary navigation">
+      <div class="nav-inner">
+        <a class="nav-brand" href="#route" aria-label="South London Orbital Link route">
+          Outer London 03
+        </a>
+        <nav class="nav-links" aria-label="Project sections">
+          <a href="#route">Route</a>
+          <a href="#problem">Problem</a>
+          <a href="#solution">Solution</a>
+          <a href="#precedent">Precedent</a>
+          <a href="#indicators">Indicators</a>
+          <a href="#references">References</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="route-scene" id="route-scene" aria-labelledby="page-title">
+        <div class="sticky-stage" id="route" aria-label="South London orbital route MVP">
+          <div class="hero-copy">
+            <p class="project-kicker">Outer London 03</p>
+            <h1 id="page-title">South London Orbital Link</h1>
+            <p class="subtitle">
+              An Overground-style orbital service connecting Kingston, Surbiton,
+              Worcester Park, Sutton, Wallington and West Croydon
+            </p>
+            <p class="mvp-note">Schematic route overlay — not to scale</p>
+          </div>
+
+          <div class="map-card" aria-label="Schematic route over map background">
+            <div class="map-camera" id="map-camera">
+              <div class="map-plane">
+                <img
+                  class="map-background"
+                  src="assets/map-background.png"
+                  alt="Muted OpenStreetMap-based background showing the corridor from Kingston to West Croydon."
+                />
+
+                <svg
+                  class="route-overlay"
+                  viewBox="0 0 1000 620"
+                  role="img"
+                  aria-labelledby="route-title route-desc"
+                  preserveAspectRatio="xMidYMid meet"
+                >
+                  <title id="route-title">Animated route from Kingston to West Croydon</title>
+                  <desc id="route-desc">
+                    A schematic route line connects Kingston, Surbiton, Worcester Park,
+                    Sutton, Wallington and West Croydon from west to east.
+                  </desc>
+
+                  <!-- Edit route path here. Coordinates use the 1000 x 620 SVG viewBox. -->
+                  <path
+                    class="route-shadow"
+                    d="M 118 172 C 112 246 132 319 176 356 C 239 408 298 306 358 306 C 427 307 445 394 518 392 C 592 390 606 342 678 344 C 742 347 778 258 852 252"
+                  />
+                  <path
+                    id="route-path"
+                    class="route-path"
+                    d="M 118 172 C 112 246 132 319 176 356 C 239 408 298 306 358 306 C 427 307 445 394 518 392 C 592 390 606 342 678 344 C 742 347 778 258 852 252"
+                  />
+
+                  <!-- Edit station coordinates, reveal progress, and labels here. -->
+                  <g class="station major" data-progress="0.03" transform="translate(118 172)">
+                    <circle class="station-outer" r="19" />
+                    <circle class="station-inner" r="11" />
+                    <text class="station-label" x="24" y="-30">Kingston</text>
+                  </g>
+
+                  <g class="station" data-progress="0.22" transform="translate(176 356)">
+                    <circle class="station-inner" r="11" />
+                    <text class="station-label" x="-72" y="48">Surbiton</text>
+                  </g>
+
+                  <g class="station" data-progress="0.42" transform="translate(358 306)">
+                    <circle class="station-inner" r="11" />
+                    <text class="station-label" x="-94" y="-45">Worcester Park</text>
+                  </g>
+
+                  <g class="station major" data-progress="0.62" transform="translate(518 392)">
+                    <circle class="station-outer" r="19" />
+                    <circle class="station-inner" r="11" />
+                    <text class="station-label" x="-42" y="58">Sutton</text>
+                  </g>
+
+                  <g class="station" data-progress="0.79" transform="translate(678 344)">
+                    <circle class="station-inner" r="11" />
+                    <text class="station-label" x="22" y="47">Wallington</text>
+                  </g>
+
+                  <g class="station major" data-progress="0.96" transform="translate(852 252)">
+                    <circle class="station-outer" r="19" />
+                    <circle class="station-inner" r="11" />
+                    <text class="station-label" x="-86" y="-45">West Croydon</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <p class="map-attribution">Map background: © OpenStreetMap contributors</p>
+            <p id="completion-label" class="completion-label" aria-hidden="true">
+              Complete proposed orbital link
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="problem" aria-labelledby="problem-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <p class="section-kicker">Problem Snapshot</p>
+            <h2 id="problem-title">The orbital connectivity gap</h2>
+            <p>
+              Outer London orbital journeys can be slower and less direct by public
+              transport than by car, reinforcing private vehicle dependency for
+              suburb-to-suburb travel.
+            </p>
+          </div>
+
+          <div class="stats-grid" aria-label="Corridor snapshot statistics">
+            <article class="stat-card reveal-card">
+              <strong>768,400 residents</strong>
+              <span>Combined population of Croydon, Sutton and Kingston.</span>
+            </article>
+            <article class="stat-card reveal-card">
+              <strong>~65% working age</strong>
+              <span>Approximate share of residents aged 16–64 across the three-borough corridor.</span>
+            </article>
+            <article class="stat-card reveal-card">
+              <strong>260,000+ jobs</strong>
+              <span>Employment base across Kingston, Sutton and Croydon.</span>
+            </article>
+            <article class="stat-card reveal-card">
+              <strong>Journey-time baseline</strong>
+              <span>
+                Checked station-to-station comparisons show mixed results, with some
+                public transport trips already competitive and others still indirect.
+              </span>
+            </article>
+          </div>
+
+          <article class="comparison-card reveal" aria-labelledby="comparison-title">
+            <div>
+              <p class="eyebrow">Checked journey-time comparison</p>
+              <h3 id="comparison-title">Current journey-time baseline</h3>
+              <p class="comparison-explainer">
+                These station-to-station checks describe the current baseline, not the
+                proposed service. They show that public transport is competitive on some
+                links, while wider door-to-door orbital trips can still feel easier by car.
+              </p>
+            </div>
+            <div class="journey-table" role="table" aria-label="Checked journey-time comparison">
+              <div class="journey-row journey-head" role="row">
+                <span role="columnheader">Journey</span>
+                <span role="columnheader">TfL public transport</span>
+                <span role="columnheader">Google Maps car</span>
+              </div>
+              <div class="journey-row" role="row">
+                <span role="cell" data-label="Journey">Sutton → Kingston</span>
+                <span role="cell" data-label="TfL public transport">35 min</span>
+                <span role="cell" data-label="Google Maps car">37 min</span>
+              </div>
+              <div class="journey-row" role="row">
+                <span role="cell" data-label="Journey">Sutton → West Croydon</span>
+                <span role="cell" data-label="TfL public transport">15 min</span>
+                <span role="cell" data-label="Google Maps car">29 min</span>
+              </div>
+              <div class="journey-row" role="row">
+                <span role="cell" data-label="Journey">West Croydon → Kingston</span>
+                <span role="cell" data-label="TfL public transport">52 min</span>
+                <span role="cell" data-label="Google Maps car">57 min</span>
+              </div>
+            </div>
+            <p class="fine-print">
+              Public transport times from TfL Journey Planner; car times from Google Maps
+              driving directions. Checked 9 June 2026 for station-to-station trips departing
+              around 16:45; journey times vary by traffic, service pattern and exact origin.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section corridor-evidence-section" id="corridor" aria-labelledby="corridor-title">
+        <div class="corridor-sticky-stage">
+          <div class="section-inner corridor-sticky-inner">
+          <div class="section-heading corridor-evidence-heading reveal">
+            <p class="section-kicker">Corridor Evidence</p>
+            <h2 id="corridor-title">Why Kingston–Sutton–Croydon?</h2>
+            <p>
+              A focused Outer London corridor with major population, employment and
+              service nodes.
+            </p>
+          </div>
+
+          <div class="corridor-evidence-panel reveal">
+            <figure class="heatmap-card" data-heatmap-src="assets/corridor-heatmap.png">
+              <img
+                src="assets/corridor-heatmap.png"
+                alt="OpenStreetMap-based corridor map with schematic focus areas around Kingston, Sutton and Croydon."
+              >
+              <svg class="heatmap-hotspots" viewBox="0 0 1000 560" aria-hidden="true" focusable="false">
+                <g class="heatmap-hotspot hotspot-kingston" data-reveal-at="0.34">
+                  <circle class="hotspot-fill" cx="130" cy="125" r="82"></circle>
+                  <circle class="hotspot-ring" cx="130" cy="125" r="64"></circle>
+                  <text class="hotspot-place-name" x="130" y="132" text-anchor="middle">Kingston</text>
+                </g>
+                <g class="heatmap-hotspot hotspot-sutton" data-reveal-at="0.56">
+                  <circle class="hotspot-fill" cx="553" cy="423" r="92"></circle>
+                  <circle class="hotspot-ring" cx="553" cy="423" r="72"></circle>
+                  <text class="hotspot-place-name" x="553" y="431" text-anchor="middle">Sutton</text>
+                </g>
+                <g class="heatmap-hotspot hotspot-croydon" data-reveal-at="0.62">
+                  <circle class="hotspot-fill" cx="894" cy="317" r="88"></circle>
+                  <circle class="hotspot-ring" cx="894" cy="317" r="69"></circle>
+                  <text class="hotspot-place-name" x="894" y="325" text-anchor="middle">Croydon</text>
+                </g>
+              </svg>
+              <div class="heatmap-placeholder" aria-hidden="true">
+                Corridor heatmap placeholder
+              </div>
+              <figcaption class="heatmap-overlay">
+                <p>
+                  The heatmap highlights population and activity clusters around Kingston,
+                  Sutton and Croydon. The proposed route uses this corridor as a focused
+                  case study for improving orbital public transport between Outer London
+                  centres.
+                </p>
+              </figcaption>
+            </figure>
+
+            <p class="heatmap-caption">
+              The heatmap highlights population and activity clusters around Kingston,
+              Sutton and Croydon. The proposed route uses this corridor as a focused
+              case study for improving orbital public transport between Outer London
+              centres.
+            </p>
+            <p class="source-note">
+              Map background: © OpenStreetMap contributors. Density focus overlay:
+              project demographic mapping; dataset/source to be confirmed.
+            </p>
+          </div>
+          </div>
+        </div>
+
+        <div class="section-inner corridor-evidence-cards">
+          <div class="evidence-card-grid">
+            <article class="evidence-card reveal-card">
+              <h3>Population clusters</h3>
+              <p>
+                Kingston, Sutton and Croydon form key residential and activity nodes
+                within the corridor.
+              </p>
+            </article>
+            <article class="evidence-card reveal-card">
+              <h3>Cross-borough travel</h3>
+              <p>
+                Residents and workers move across borough boundaries for jobs, education,
+                healthcare and local services.
+              </p>
+            </article>
+            <article class="evidence-card reveal-card">
+              <h3>Orbital route logic</h3>
+              <p>
+                The proposed link connects these nodes directly, reducing reliance on
+                indirect radial journeys.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section section-white" id="solution" aria-labelledby="solution-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <p class="section-kicker">Proposed Solution</p>
+            <h2 id="solution-title">South London Orbital Link</h2>
+            <p>
+              An Overground-style orbital rail service connecting Kingston, Surbiton,
+              Worcester Park, Sutton, Wallington and West Croydon, using existing
+              stations and National Rail corridors where possible.
+            </p>
+          </div>
+
+          <div class="route-chip reveal" aria-label="Proposed station sequence">
+            <span>Kingston</span>
+            <span>Surbiton</span>
+            <span>Worcester Park</span>
+            <span>Sutton</span>
+            <span>Wallington</span>
+            <span>West Croydon</span>
+          </div>
+
+          <div class="card-grid three-up">
+            <article class="info-card reveal-card">
+              <h3>Existing stations</h3>
+              <p>Uses current stations rather than proposing new station construction.</p>
+            </article>
+            <article class="info-card reveal-card">
+              <h3>Rail corridor reuse</h3>
+              <p>
+                From Sutton to West Croydon, the concept reuses the existing rail track;
+                other sections would need feasibility review and timetable integration.
+              </p>
+            </article>
+            <article class="info-card reveal-card">
+              <h3>Service integration</h3>
+              <p>
+                Coordinates timetables, interchange, wayfinding and passenger information
+                to create a clearer orbital route.
+              </p>
+            </article>
+          </div>
+
+          <aside class="contrast-box reveal" aria-labelledby="contrast-title">
+            <h3 id="contrast-title">What this is — and is not</h3>
+            <ul>
+              <li>It is an Overground-style orbital service concept.</li>
+              <li>It prioritises existing stations and rail corridors.</li>
+              <li>It is not presented as a fully new underground metro line.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="content-section section-white" id="precedent" aria-labelledby="precedent-title">
+        <div class="section-inner precedent-layout">
+          <div class="precedent-copy reveal">
+            <p class="section-kicker">Precedent In Progress</p>
+            <h2 id="precedent-title">Grand Paris Express Line 15</h2>
+            <p>
+              Grand Paris Express Line 15 shows how orbital rail can connect suburban
+              centres without routing every journey through the city centre. South
+              London Orbital Link adapts the orbital principle, not the scale.
+            </p>
+            <p class="source-note">
+              Source: Bonjour RATP; Webuild; Paris Metro Line 15 official diagram.
+            </p>
+          </div>
+
+          <div
+            class="precedent-visual reveal"
+            data-precedent-src="assets/paris-line-15-precedent.svg?v=3"
+            aria-label="Paris Line 15 precedent diagram"
+          >
+            <div class="precedent-placeholder">Paris Line 15 precedent diagram</div>
+          </div>
+
+          <div class="fact-strip" aria-label="Grand Paris Express Line 15 facts">
+            <article class="fact-card reveal-card">75 km orbital route</article>
+            <article class="fact-card reveal-card">45 suburban municipalities connected</article>
+            <article class="fact-card reveal-card">Phased opening from 2027 to 2031</article>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="stakeholders" aria-labelledby="stakeholders-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <p class="section-kicker">Stakeholder Fit</p>
+            <h2 id="stakeholders-title">Designed around stakeholder needs</h2>
+          </div>
+          <div class="card-grid three-up">
+            <article class="info-card reveal-card">
+              <h3>Working residents</h3>
+              <p>Need faster, safer and more reliable orbital journeys.</p>
+            </article>
+            <article class="info-card reveal-card">
+              <h3>Local borough councils</h3>
+              <p>Need accessible town centres, less congestion and politically deliverable improvements.</p>
+            </article>
+            <article class="info-card reveal-card">
+              <h3>TfL and operators</h3>
+              <p>Need operationally realistic services, timetable reliability and manageable constraints.</p>
+            </article>
+          </div>
+          <p class="relationship-note reveal">
+            Residents define desirability, boroughs shape deliverability, and operators
+            determine operational feasibility.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section section-white" id="indicators" aria-labelledby="indicators-title">
+        <div class="section-inner">
+          <div class="section-heading reveal">
+            <p class="section-kicker">Evaluation Indicators</p>
+            <h2 id="indicators-title">How success would be measured</h2>
+            <p>
+              These indicators would test whether the proposal improves orbital public
+              transport competitiveness without ignoring operational and stakeholder
+              constraints.
+            </p>
+          </div>
+          <div class="metric-grid" aria-label="Evaluation indicators">
+            <article class="metric-card reveal-card">Current journey-time baseline</article>
+            <article class="metric-card reveal-card">Number of interchanges</article>
+            <article class="metric-card reveal-card">Service reliability</article>
+            <article class="metric-card reveal-card">Passenger demand</article>
+            <article class="metric-card reveal-card">Access to jobs and services</article>
+            <article class="metric-card reveal-card">Operator feasibility</article>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section references-section" id="references" aria-labelledby="references-title">
+        <div class="section-inner">
+          <div class="section-heading references-heading reveal">
+            <p class="section-kicker">References And GAI Statement</p>
+            <h2 id="references-title">References &amp; GAI Statement</h2>
+            <p>Full references, data sources, image credits and GAI statement are provided below.</p>
+            <p class="qr-note">This site is linked from the Assessment 2 poster QR code.</p>
+            <p class="qr-copy">Scan for project website, references &amp; GAI statement.</p>
+          </div>
+
+          <div class="references-grid">
+            <article class="reference-card reference-main reveal">
+              <div class="reference-card-head">
+                <div>
+                  <p class="eyebrow">Numbered References</p>
+                  <h3>References</h3>
+                </div>
+                <button class="copy-button" type="button" data-copy-target="references-text">
+                  Copy list
+                </button>
+              </div>
+              <pre id="references-text" class="reference-text">[1] Transport for London — Travel in London reports.
+[2] Office for National Statistics — Census 2021.
+[3] TfL Journey Planner and Google Maps driving directions, checked 9 June 2026.
+[4] Bonjour RATP — Metro Line 15.
+[5] Webuild — Grand Paris Express Line 15.</pre>
+            </article>
+
+            <article class="reference-card reveal">
+              <p class="eyebrow">Image And Data Credits</p>
+              <h3>Credits</h3>
+              <pre id="image-credits-text" class="reference-text">- Route schematic: created by authors for academic assessment purposes.
+- Paris Line 15 diagram: simplified diagram redrawn by authors based on Bonjour RATP and Webuild.
+- Map background: © OpenStreetMap contributors.</pre>
+            </article>
+
+            <article class="reference-card reveal">
+              <p class="eyebrow">GAI Statement</p>
+              <h3>Statement</h3>
+              <p id="gai-statement-text" class="gai-placeholder">
+                GAI statement to be finalised by the group before submission.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js?v=3" defer></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Outer London 03 Admin</title>
+    <meta
+      name="description"
+      content="Admin editor for Outer London 03 references and GAI statement."
+    />
+    <link rel="stylesheet" href="admin.css?v=1" />
+  </head>
+  <body>
+    <main class="admin-shell">
+      <header class="admin-header">
+        <a href="index.html#references" class="back-link">Public references</a>
+        <p class="kicker">Assessment 2 QR Destination</p>
+        <h1>Outer London 03 Admin</h1>
+        <p>Edit References and GAI Statement</p>
+      </header>
+
+      <section class="admin-card" id="login-panel" aria-labelledby="login-title">
+        <h2 id="login-title">Admin password</h2>
+        <p>
+          Enter the shared group password to update the References &amp; GAI Statement
+          shown on the public project website.
+        </p>
+        <form id="login-form" class="login-form">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+          <button type="submit">Log in</button>
+        </form>
+        <p class="message" id="login-message" role="status"></p>
+      </section>
+
+      <section class="editor-grid is-hidden" id="editor-panel" aria-labelledby="editor-title">
+        <form class="admin-card editor-card" id="content-form">
+          <div class="editor-head">
+            <div>
+              <p class="kicker">Live Content</p>
+              <h2 id="editor-title">References &amp; GAI Statement</h2>
+            </div>
+            <button type="button" class="secondary-button" id="logout-button">Log out</button>
+          </div>
+
+          <label for="references">References</label>
+          <textarea id="references" name="references" rows="10" maxlength="30000"></textarea>
+
+          <label for="imageCredits">Image/Data Credits</label>
+          <textarea id="imageCredits" name="imageCredits" rows="7" maxlength="10000"></textarea>
+
+          <label for="gaiStatement">GAI Statement</label>
+          <textarea id="gaiStatement" name="gaiStatement" rows="7" maxlength="10000"></textarea>
+
+          <div class="editor-actions">
+            <button type="submit">Save updates</button>
+            <span id="last-updated" class="last-updated">Last updated: not loaded</span>
+          </div>
+          <p class="message" id="save-message" role="status"></p>
+        </form>
+
+        <aside class="admin-card preview-card" aria-labelledby="preview-title">
+          <p class="kicker">Preview</p>
+          <h2 id="preview-title">Public section preview</h2>
+          <div class="preview-block">
+            <h3>References</h3>
+            <pre id="preview-references"></pre>
+          </div>
+          <div class="preview-block">
+            <h3>Image/Data Credits</h3>
+            <pre id="preview-credits"></pre>
+          </div>
+          <div class="preview-block">
+            <h3>GAI Statement</h3>
+            <p id="preview-gai"></p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="admin.js?v=1" defer></script>
+  </body>
+</html>
