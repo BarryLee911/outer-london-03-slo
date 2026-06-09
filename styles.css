@@ -845,7 +845,7 @@ h1 {
 }
 
 .works-step-card span {
-  color: var(--accent);
+  color: var(--line, #f0782a);
   font-size: 0.76rem;
   font-weight: 820;
   letter-spacing: 0.08em;
@@ -916,7 +916,7 @@ h1 {
 
 .slo-route {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--line, #f0782a);
   stroke-width: 18;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1033,7 +1033,7 @@ h1 {
 
 .legend-line-slo {
   border-top-width: 8px;
-  border-color: var(--accent);
+  border-color: var(--line, #f0782a);
 }
 
 .legend-node {
