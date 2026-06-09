@@ -8,10 +8,17 @@ const completionLabel = document.querySelector("#completion-label");
 const heatmapSection = document.querySelector("#corridor");
 const heatmapCard = document.querySelector(".heatmap-card");
 const heatmapHotspots = Array.from(document.querySelectorAll(".heatmap-hotspot"));
+const sloSchematic = document.querySelector("[data-slo-schematic]");
+const sloRouteWest = document.querySelector(".slo-route-west");
+const sloRouteEast = document.querySelector(".slo-route-east");
+const sloStations = Array.from(document.querySelectorAll(".slo-station"));
+const sloStepCards = Array.from(document.querySelectorAll("[data-slo-step]"));
 const revealItems = Array.from(document.querySelectorAll(".reveal, .reveal-card"));
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let routeLength = 0;
+let sloWestLength = 0;
+let sloEastLength = 0;
 
 const fallbackContent = {
   references: `[1] Transport for London — Travel in London reports.
@@ -133,11 +140,62 @@ function setHeatmapProgress() {
   });
 }
 
+function getSloSchematicProgress() {
+  if (!sloSchematic) {
+    return 0;
+  }
+
+  const rect = sloSchematic.getBoundingClientRect();
+  const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
+  return clamp(-rect.top / scrollableDistance, 0, 1);
+}
+
+function setPathDrawProgress(path, length, progress) {
+  if (!path || !length) {
+    return;
+  }
+
+  const visibleLength = length * clamp(progress, 0, 1);
+  path.style.strokeDashoffset = `${length - visibleLength}`;
+}
+
+function setSloSchematicProgress(progress) {
+  if (!sloSchematic) {
+    return;
+  }
+
+  if (reducedMotionQuery.matches) {
+    progress = 1;
+  }
+
+  /* Edit step timing here. The west leg finishes at Sutton before the east leg starts. */
+  const westProgress = clamp((progress - 0.08) / 0.36, 0, 1);
+  const eastProgress = clamp((progress - 0.62) / 0.32, 0, 1);
+  const activeStep = progress < 0.48 ? "1" : progress < 0.66 ? "2" : "3";
+
+  setPathDrawProgress(sloRouteWest, sloWestLength, westProgress);
+  setPathDrawProgress(sloRouteEast, sloEastLength, eastProgress);
+
+  sloSchematic.classList.toggle("is-step-2", progress >= 0.48 && progress < 0.72);
+  sloSchematic.classList.toggle("is-complete", progress >= 0.94);
+
+  sloStepCards.forEach((card) => {
+    card.classList.toggle("is-active", card.dataset.sloStep === activeStep);
+  });
+
+  sloStations.forEach((station) => {
+    const index = Number.parseInt(station.dataset.stationIndex || "0", 10);
+    const reachedAt = [0.12, 0.2, 0.34, 0.46, 0.74, 0.92][index] || 1;
+    station.classList.toggle("is-reached", progress >= reachedAt);
+  });
+}
+
 function update() {
   if (reducedMotionQuery.matches) {
     setRouteProgress(1);
     setCameraProgress(1);
     setHeatmapProgress();
+    setSloSchematicProgress(1);
     revealItems.forEach((item) => item.classList.add("is-visible"));
     return;
   }
@@ -147,6 +205,7 @@ function update() {
   setRouteProgress(progress);
   setCameraProgress(progress);
   setHeatmapProgress();
+  setSloSchematicProgress(getSloSchematicProgress());
 }
 
 function setupRoute() {
@@ -159,6 +218,28 @@ function setupRoute() {
   routeShadow.style.strokeDashoffset = `${routeLength}`;
 
   update();
+}
+
+function setupSloSchematic() {
+  if (!sloSchematic || !sloRouteWest || !sloRouteEast) {
+    return;
+  }
+
+  sloWestLength = sloRouteWest.getTotalLength();
+  sloEastLength = sloRouteEast.getTotalLength();
+
+  /* Orange SLO paths use stroke-dasharray and stroke-dashoffset for drawing. */
+  sloRouteWest.style.strokeDasharray = `${sloWestLength}`;
+  sloRouteWest.style.strokeDashoffset = `${sloWestLength}`;
+  sloRouteEast.style.strokeDasharray = `${sloEastLength}`;
+  sloRouteEast.style.strokeDashoffset = `${sloEastLength}`;
+
+  if (reducedMotionQuery.matches) {
+    sloSchematic.classList.add("is-complete");
+    sloStations.forEach((station) => station.classList.add("is-reached"));
+    setPathDrawProgress(sloRouteWest, sloWestLength, 1);
+    setPathDrawProgress(sloRouteEast, sloEastLength, 1);
+  }
 }
 
 function setupRevealAnimations() {
@@ -403,4 +484,5 @@ setupPrecedentVisual();
 setupRevealAnimations();
 setupPublicContent();
 setupCopyButtons();
+setupSloSchematic();
 setupRoute();
