@@ -8,7 +8,7 @@
       name="description"
       content="MVP route overlay for Outer London 03 — South London Orbital Link."
     />
-    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=5" />
   </head>
   <body>
     <a class="skip-link" href="#problem">Skip to project details</a>
@@ -314,33 +314,6 @@
                   The proposal links existing National Rail stations first, then overlays
                   an orange SLO service line as a clearer orbital route.
                 </p>
-
-                <div class="works-step-list" aria-live="polite">
-                  <article class="works-step-card is-active" data-slo-step="1">
-                    <span>Existing stations</span>
-                    <h4>Step 1 — Connect existing western stations</h4>
-                    <p>
-                      Orange line shows the proposed SLO service linking Kingston,
-                      Surbiton, Worcester Park and Sutton.
-                    </p>
-                  </article>
-                  <article class="works-step-card" data-slo-step="2">
-                    <span>Join point</span>
-                    <h4>Step 2 — Join at Sutton</h4>
-                    <p>
-                      Sutton acts as the key join point between the proposed orbital
-                      section and the existing rail corridor.
-                    </p>
-                  </article>
-                  <article class="works-step-card" data-slo-step="3">
-                    <span>Rail corridor</span>
-                    <h4>Step 3 — Reuse existing rail corridor</h4>
-                    <p>
-                      From Sutton to Wallington and West Croydon, SLO reuses existing
-                      National Rail infrastructure where feasible.
-                    </p>
-                  </article>
-                </div>
               </div>
 
               <figure class="works-diagram" aria-label="Schematic showing existing National Rail context and proposed SLO service">
@@ -371,7 +344,11 @@
                   <text class="context-label" x="54" y="82">Existing National Rail context</text>
                   <text class="context-label context-label-end" x="712" y="118">Connections beyond corridor</text>
 
-                  <!-- Edit orange SLO service path coordinates here. -->
+                  <!-- Edit shared corridor and orange SLO service path coordinates here. -->
+                  <path
+                    class="slo-shared-corridor"
+                    d="M 550 385 C 618 362, 666 356, 720 340 C 774 322, 826 292, 880 245"
+                  />
                   <path
                     class="slo-route slo-route-west"
                     d="M 126 151 C 154 174, 172 219, 190 250 C 246 284, 338 292, 386 330 C 430 365, 500 384, 550 385"
@@ -419,15 +396,51 @@
                   <text class="works-final-label" x="500" y="520" text-anchor="middle">
                     Overground-style orbital service using existing stations and rail corridors where possible.
                   </text>
+
+                  <g class="shared-corridor-label" aria-hidden="true">
+                    <rect x="596" y="398" width="318" height="58" rx="12" />
+                    <text x="616" y="423">
+                      <tspan>Reuses existing National Rail corridor</tspan>
+                      <tspan x="616" dy="18">where feasible</tspan>
+                    </text>
+                  </g>
                 </svg>
 
                 <figcaption class="works-legend">
                   <span><i class="legend-line legend-line-slo"></i>Thick orange = SLO proposed orbital service</span>
+                  <span><i class="legend-line legend-line-shared"></i>Orange over grey = reuse corridor where feasible</span>
                   <span><i class="legend-line legend-line-rail"></i>Thin grey = existing National Rail context</span>
                   <span><i class="legend-node"></i>White node = existing station</span>
                   <span><i class="legend-node legend-node-double"></i>Double node = join/interchange point</span>
                 </figcaption>
               </figure>
+
+              <div class="works-step-list" aria-live="polite">
+                <article class="works-step-card is-active" data-slo-step="1" aria-hidden="false">
+                  <span>Existing stations</span>
+                  <h4>Step 1 — Connect existing western stations</h4>
+                  <p>
+                    Orange line shows the proposed SLO service linking Kingston,
+                    Surbiton, Worcester Park and Sutton.
+                  </p>
+                </article>
+                <article class="works-step-card" data-slo-step="2" aria-hidden="true">
+                  <span>Join point</span>
+                  <h4>Step 2 — Join at Sutton</h4>
+                  <p>
+                    Sutton acts as the key join point between the proposed orbital
+                    section and the existing rail corridor.
+                  </p>
+                </article>
+                <article class="works-step-card" data-slo-step="3" aria-hidden="true">
+                  <span>Rail corridor</span>
+                  <h4>Step 3 — Reuse existing rail corridor</h4>
+                  <p>
+                    From Sutton to Wallington and West Croydon, SLO reuses existing
+                    National Rail infrastructure where feasible.
+                  </p>
+                </article>
+              </div>
             </div>
           </div>
 
@@ -591,6 +604,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=4" defer></script>
+    <script src="script.js?v=5" defer></script>
   </body>
 </html>

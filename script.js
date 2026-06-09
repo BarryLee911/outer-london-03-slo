@@ -177,10 +177,13 @@ function setSloSchematicProgress(progress) {
   setPathDrawProgress(sloRouteEast, sloEastLength, eastProgress);
 
   sloSchematic.classList.toggle("is-step-2", progress >= 0.48 && progress < 0.72);
+  sloSchematic.classList.toggle("is-shared-corridor", progress >= 0.66);
   sloSchematic.classList.toggle("is-complete", progress >= 0.94);
 
   sloStepCards.forEach((card) => {
-    card.classList.toggle("is-active", card.dataset.sloStep === activeStep);
+    const isActive = card.dataset.sloStep === activeStep;
+    card.classList.toggle("is-active", isActive);
+    card.setAttribute("aria-hidden", isActive ? "false" : "true");
   });
 
   sloStations.forEach((station) => {

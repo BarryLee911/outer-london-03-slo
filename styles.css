@@ -779,13 +779,15 @@ h1 {
   position: sticky;
   top: 82px;
   display: grid;
-  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
-  gap: 22px;
-  align-items: stretch;
-  min-height: min(720px, calc(100vh - 112px));
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-content: center;
+  align-items: center;
+  width: min(100%, 1180px);
+  min-height: min(780px, calc(100vh - 112px));
+  margin: 0 auto;
 }
 
-.works-copy,
 .works-diagram {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -795,16 +797,19 @@ h1 {
 
 .works-copy {
   display: grid;
-  align-content: center;
-  gap: 16px;
-  padding: 28px;
+  justify-items: center;
+  gap: 10px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 18px;
+  text-align: center;
 }
 
 .works-copy h3 {
   margin: 0;
   color: var(--text-strong);
-  font-size: 3.1rem;
-  line-height: 1;
+  font-size: 2.45rem;
+  line-height: 1.05;
   letter-spacing: 0;
 }
 
@@ -817,31 +822,39 @@ h1 {
 
 .works-step-list {
   display: grid;
-  gap: 10px;
-  margin-top: 8px;
+  width: min(760px, 100%);
+  margin: 0 auto;
 }
 
 .works-step-card {
+  grid-area: 1 / 1;
   display: grid;
   gap: 6px;
-  padding: 14px 16px;
-  border: 1px solid rgba(16, 35, 63, 0.08);
+  min-height: 126px;
+  padding: 18px 20px;
+  border: 1px solid rgba(16, 35, 63, 0.1);
   border-radius: 8px;
-  background: rgba(247, 248, 250, 0.72);
-  opacity: 0.55;
-  transform: translateY(4px);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 42px rgba(16, 35, 63, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.985);
   transition:
     opacity 220ms ease,
+    visibility 220ms ease,
     transform 220ms ease,
     background-color 220ms ease,
     border-color 220ms ease;
+  visibility: hidden;
 }
 
 .works-step-card.is-active {
   border-color: rgba(240, 120, 42, 0.26);
   background: rgba(255, 246, 239, 0.92);
   opacity: 1;
-  transform: translateY(0);
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  visibility: visible;
 }
 
 .works-step-card span {
@@ -855,7 +868,7 @@ h1 {
 .works-step-card h4 {
   margin: 0;
   color: var(--text-strong);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   line-height: 1.2;
 }
 
@@ -882,6 +895,7 @@ h1 {
   width: 100%;
   height: auto;
   aspect-ratio: 1000 / 560;
+  max-height: 43vh;
   min-height: 360px;
   border-radius: 8px;
   background:
@@ -921,6 +935,25 @@ h1 {
   stroke-linecap: round;
   stroke-linejoin: round;
   filter: drop-shadow(0 10px 16px rgba(240, 120, 42, 0.23));
+}
+
+.slo-shared-corridor {
+  fill: none;
+  stroke: rgba(111, 122, 137, 0.38);
+  stroke-width: 34;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.22;
+  transition:
+    opacity 220ms ease,
+    stroke 220ms ease,
+    stroke-width 220ms ease;
+}
+
+.works-schematic.is-shared-corridor .slo-shared-corridor {
+  stroke: rgba(111, 122, 137, 0.58);
+  stroke-width: 36;
+  opacity: 0.58;
 }
 
 .slo-station circle {
@@ -1007,9 +1040,29 @@ h1 {
   opacity: 1;
 }
 
+.shared-corridor-label {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.works-schematic.is-shared-corridor .shared-corridor-label {
+  opacity: 1;
+}
+
+.shared-corridor-label rect {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: rgba(111, 122, 137, 0.24);
+}
+
+.shared-corridor-label text {
+  fill: var(--text-strong);
+  font-size: 15px;
+  font-weight: 780;
+}
+
 .works-legend {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px 12px;
   color: var(--muted);
   font-size: 0.82rem;
@@ -1025,6 +1078,7 @@ h1 {
 
 .legend-line {
   display: inline-block;
+  position: relative;
   flex: 0 0 30px;
   height: 0;
   border-top: 4px solid rgba(111, 122, 137, 0.4);
@@ -1034,6 +1088,19 @@ h1 {
 .legend-line-slo {
   border-top-width: 8px;
   border-color: var(--line, #f0782a);
+}
+
+.legend-line-shared {
+  border-top-width: 10px;
+  border-color: rgba(111, 122, 137, 0.5);
+}
+
+.legend-line-shared::after {
+  content: "";
+  position: absolute;
+  inset: -7px 0 auto;
+  border-top: 4px solid var(--line, #f0782a);
+  border-radius: 999px;
 }
 
 .legend-node {
@@ -1416,11 +1483,19 @@ h1 {
   }
 
   .works-copy {
-    padding: 24px;
+    padding: 0 18px;
   }
 
   .works-copy h3 {
     font-size: 2.55rem;
+  }
+
+  .works-diagram {
+    padding: 16px;
+  }
+
+  .works-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1636,11 +1711,17 @@ h1 {
   }
 
   .works-svg {
+    max-height: none;
     min-height: 300px;
   }
 
   .works-legend {
     grid-template-columns: 1fr;
+  }
+
+  .works-step-card {
+    min-height: 160px;
+    padding: 16px;
   }
 
   .context-label {
@@ -1696,6 +1777,7 @@ h1 {
   }
 
   .works-step-card {
+    min-height: 184px;
     padding: 12px;
   }
 }
