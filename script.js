@@ -357,6 +357,90 @@ function setupRevealAnimations() {
   revealItems.forEach((item) => revealObserver.observe(item));
 }
 
+function formatHighlightCount(value, format) {
+  if (format === "comma") {
+    return Math.round(value).toLocaleString("en-GB");
+  }
+
+  return `${Math.round(value)}`;
+}
+
+function setHighlightCounts(card, progress = 1) {
+  card.querySelectorAll("[data-count-up]").forEach((counter) => {
+    const finalValue = Number.parseInt(counter.dataset.countTo || "0", 10);
+
+    if (!Number.isFinite(finalValue)) {
+      return;
+    }
+
+    counter.textContent = formatHighlightCount(finalValue * progress, counter.dataset.countFormat);
+  });
+}
+
+function animateHighlightCounts(card) {
+  const duration = 1200;
+  const startTime = performance.now();
+
+  const tick = (now) => {
+    const progress = smoothStep(clamp((now - startTime) / duration, 0, 1));
+    setHighlightCounts(card, progress);
+
+    if (progress < 1) {
+      window.requestAnimationFrame(tick);
+    }
+  };
+
+  window.requestAnimationFrame(tick);
+}
+
+function activateHighlightCard(card, shouldAnimateCount = true) {
+  if (card.classList.contains("is-highlight-visible")) {
+    return;
+  }
+
+  card.classList.add("is-highlight-visible");
+
+  if (shouldAnimateCount) {
+    animateHighlightCounts(card);
+  } else {
+    setHighlightCounts(card, 1);
+  }
+}
+
+function setupHighlightCards() {
+  const highlightCards = Array.from(document.querySelectorAll("[data-highlight-card]"));
+
+  if (!highlightCards.length) {
+    return;
+  }
+
+  if (reducedMotionQuery.matches || !("IntersectionObserver" in window)) {
+    highlightCards.forEach((card) => activateHighlightCard(card, false));
+    return;
+  }
+
+  highlightCards.forEach((card) => setHighlightCounts(card, 0));
+
+  const highlightObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        activateHighlightCard(entry.target, true);
+        highlightObserver.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.32,
+      rootMargin: "0px 0px -10% 0px",
+    },
+  );
+
+  highlightCards.forEach((card) => highlightObserver.observe(card));
+}
+
 async function setupPrecedentVisual() {
   const visual = document.querySelector(".precedent-visual[data-precedent-src]");
 
@@ -569,12 +653,16 @@ window.addEventListener("resize", () => {
 });
 reducedMotionQuery.addEventListener("change", () => {
   revealItems.forEach((item) => item.classList.add("is-visible"));
+  document.querySelectorAll("[data-highlight-card]").forEach((card) => {
+    activateHighlightCard(card, false);
+  });
   update();
 });
 
 setupHeatmapVisual();
 setupPrecedentVisual();
 setupRevealAnimations();
+setupHighlightCards();
 setupPublicContent();
 setupCopyButtons();
 setupSloSchematic();
