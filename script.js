@@ -15,6 +15,7 @@ const sloStations = Array.from(document.querySelectorAll(".slo-station"));
 const sloStepCards = Array.from(document.querySelectorAll("[data-slo-step]"));
 const revealItems = Array.from(document.querySelectorAll(".reveal, .reveal-card"));
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const compactSchematicQuery = window.matchMedia("(max-width: 980px)");
 
 let routeLength = 0;
 let sloWestLength = 0;
@@ -146,6 +147,13 @@ function getSloSchematicProgress() {
   }
 
   const rect = sloSchematic.getBoundingClientRect();
+
+  if (compactSchematicQuery.matches) {
+    const start = window.innerHeight * 0.72;
+    const end = -Math.min(window.innerHeight * 0.34, rect.height * 0.52);
+    return clamp((start - rect.top) / Math.max(1, start - end), 0, 1);
+  }
+
   const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
   return clamp(-rect.top / scrollableDistance, 0, 1);
 }
