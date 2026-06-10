@@ -8,7 +8,7 @@
       name="description"
       content="MVP route overlay for Outer London 03 — South London Orbital Link."
     />
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=7" />
   </head>
   <body>
     <a class="skip-link" href="#problem">Skip to project details</a>
@@ -308,13 +308,14 @@
               </div>
 
               <figure class="works-diagram" aria-label="Schematic showing existing National Rail context and proposed SLO service">
-                <svg
-                  class="works-svg"
-                  viewBox="0 0 1000 560"
-                  role="img"
-                  aria-label="SLO service overlay on existing stations"
-                  aria-describedby="works-svg-desc"
-                >
+                <div class="works-map-panel">
+                  <svg
+                    class="works-svg"
+                    viewBox="0 0 1000 560"
+                    role="img"
+                    aria-label="SLO service overlay on existing stations"
+                    aria-describedby="works-svg-desc"
+                  >
                   <desc id="works-svg-desc">
                     Existing National Rail context lines are shown in grey, with an
                     orange South London Orbital Link service drawn from Kingston to
@@ -394,7 +395,16 @@
                       <tspan x="616" dy="18">where feasible</tspan>
                     </text>
                   </g>
-                </svg>
+                  </svg>
+
+                  <div class="works-legend" role="list" aria-label="Schematic legend">
+                    <span role="listitem"><i class="legend-line legend-line-slo"></i>SLO service</span>
+                    <span role="listitem"><i class="legend-line legend-line-shared"></i>Reuse corridor</span>
+                    <span role="listitem"><i class="legend-line legend-line-rail"></i>National Rail context</span>
+                    <span role="listitem"><i class="legend-node"></i>Existing station</span>
+                    <span role="listitem"><i class="legend-node legend-node-double"></i>Join point</span>
+                  </div>
+                </div>
 
                 <div class="works-step-list" aria-live="polite">
                   <article class="works-step-card is-active" data-slo-step="1" aria-hidden="false">
@@ -423,13 +433,6 @@
                   </article>
                 </div>
 
-                <figcaption class="works-legend">
-                  <span><i class="legend-line legend-line-slo"></i>Thick orange = SLO proposed orbital service</span>
-                  <span><i class="legend-line legend-line-shared"></i>Orange over grey = reuse corridor where feasible</span>
-                  <span><i class="legend-line legend-line-rail"></i>Thin grey = existing National Rail context</span>
-                  <span><i class="legend-node"></i>White node = existing station</span>
-                  <span><i class="legend-node legend-node-double"></i>Double node = join/interchange point</span>
-                </figcaption>
               </figure>
             </div>
           </div>
@@ -594,6 +597,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=6" defer></script>
+    <script src="script.js?v=7" defer></script>
   </body>
 </html>
