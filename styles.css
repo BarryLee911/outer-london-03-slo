@@ -1161,17 +1161,17 @@ h1 {
 }
 
 .mini-route-drive {
-  stroke: #3478f6;
+  stroke: #f2c84b;
   stroke-width: 7;
 }
 
 .mini-route-public {
-  stroke: #728197;
+  stroke: #2f67c7;
   stroke-width: 7;
 }
 
 .mini-route-slo {
-  stroke: var(--line);
+  stroke: #e6532f;
   stroke-width: 8;
 }
 
@@ -1257,29 +1257,29 @@ h1 {
 
 .route-choice-panel {
   position: relative;
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
   margin: 22px 0 0;
   overflow: hidden;
   border-radius: 24px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 250, 252, 0.94)),
     #ffffff;
-  padding: 0;
+  padding: 20px;
   min-height: 560px;
 }
 
 .route-choice-sheet {
-  position: absolute;
-  top: 22px;
-  bottom: 22px;
-  left: 22px;
+  position: relative;
   z-index: 3;
   display: grid;
   align-content: start;
   gap: 10px;
-  width: min(380px, calc(100% - 44px));
+  width: 100%;
   min-width: 0;
-  overflow-y: auto;
+  overflow-y: visible;
   overscroll-behavior: contain;
   border: 1px solid rgba(255, 255, 255, 0.66);
   border-radius: 24px;
@@ -1399,6 +1399,16 @@ h1 {
   box-shadow: 0 10px 24px rgba(16, 35, 63, 0.08);
 }
 
+.route-choice-list [data-route-choice-item="drive"].is-active {
+  border-color: rgba(242, 200, 75, 0.5);
+  background: rgba(255, 250, 231, 0.94);
+}
+
+.route-choice-list [data-route-choice-item="public"].is-active {
+  border-color: rgba(47, 103, 199, 0.28);
+  background: rgba(242, 247, 255, 0.94);
+}
+
 .route-choice-list strong {
   color: var(--text-strong);
   font-size: 1.1rem;
@@ -1411,17 +1421,20 @@ h1 {
 }
 
 .route-choice-list .is-slo strong {
-  color: var(--line);
+  color: #e6532f;
 }
 
 .route-choice-list .is-slo.is-active {
-  border-color: rgba(240, 120, 42, 0.32);
+  border-color: rgba(230, 83, 47, 0.34);
   background: rgba(255, 247, 241, 0.94);
 }
 
 .route-choice-map {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  min-height: 520px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 22px;
 }
 
 .route-choice-svg {
@@ -1496,20 +1509,20 @@ h1 {
 }
 
 .choice-route-drive {
-  stroke: #3478f6;
-  stroke-width: 12;
+  stroke: #f2c84b;
+  stroke-width: 10;
   transition-delay: 80ms;
 }
 
 .choice-route-public {
-  stroke: #d95879;
+  stroke: #2f67c7;
   stroke-width: 11;
   transition-delay: 620ms;
 }
 
 .choice-route-slo {
   filter: url("#choice-soft-shadow");
-  stroke: var(--line);
+  stroke: #e6532f;
   stroke-width: 20;
   transition-delay: 1180ms;
 }
@@ -1528,15 +1541,15 @@ h1 {
 }
 
 .journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route-drive.is-focused {
-  stroke-width: 15;
+  stroke-width: 13;
 }
 
 .journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route-public.is-focused {
-  stroke-width: 14;
+  stroke-width: 15;
 }
 
 .journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route-slo.is-focused {
-  stroke-width: 23;
+  stroke-width: 24;
 }
 
 .journey-option-card.is-route-choice-muted {
@@ -1546,6 +1559,18 @@ h1 {
 .journey-option-card.is-route-choice-active {
   border-color: rgba(240, 120, 42, 0.28);
   box-shadow: 0 18px 46px rgba(16, 35, 63, 0.1);
+}
+
+.journey-option-drive.is-route-choice-active {
+  border-color: rgba(242, 200, 75, 0.56);
+}
+
+.journey-option-public.is-route-choice-active {
+  border-color: rgba(47, 103, 199, 0.34);
+}
+
+.journey-option-slo.is-route-choice-active {
+  border-color: rgba(230, 83, 47, 0.34);
 }
 
 .choice-callout {
@@ -1569,16 +1594,16 @@ h1 {
 }
 
 .choice-drive-callout text {
-  fill: #2f67c7;
+  fill: #9c7612;
 }
 
 .choice-public-callout text,
 .choice-public-pattern-callout text {
-  fill: #a64460;
+  fill: #2f67c7;
 }
 
 .choice-slo-callout text {
-  fill: #bd5b21;
+  fill: #c94824;
 }
 
 .journey-choice-section.is-animated .choice-drive-callout {
@@ -1607,7 +1632,7 @@ h1 {
 
 .choice-interchange circle {
   fill: #ffffff;
-  stroke: #d95879;
+  stroke: #2f67c7;
   stroke-width: 5;
 }
 
@@ -3124,23 +3149,20 @@ h1 {
   }
 
   .route-choice-panel {
-    display: grid;
-    gap: 0;
+    grid-template-columns: 1fr;
+    gap: 12px;
     min-height: auto;
     border-radius: 22px;
-    padding: 0;
+    padding: 12px;
   }
 
   .route-choice-sheet {
-    position: relative;
-    inset: auto;
-    width: auto;
-    margin: 14px;
+    margin: 0;
   }
 
   .route-choice-map {
-    position: relative;
     height: 360px;
+    min-height: 0;
   }
 
   .route-choice-svg {
@@ -3414,7 +3436,6 @@ h1 {
   }
 
   .route-choice-sheet {
-    margin: 10px;
     border-radius: 18px;
     padding: 16px;
   }
