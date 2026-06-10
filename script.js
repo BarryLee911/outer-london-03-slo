@@ -8,6 +8,8 @@ const completionLabel = document.querySelector("#completion-label");
 const heroActions = document.querySelector(".hero-actions");
 const heroActionLinks = Array.from(document.querySelectorAll(".hero-actions a"));
 const siteNav = document.querySelector(".site-nav");
+const journeyCompare = document.querySelector("[data-journey-compare]");
+const journeyChoiceRoutes = Array.from(document.querySelectorAll("[data-choice-route]"));
 const heatmapSection = document.querySelector("#corridor");
 const heatmapCard = document.querySelector(".heatmap-card");
 const heatmapHotspots = Array.from(document.querySelectorAll(".heatmap-hotspot"));
@@ -484,6 +486,76 @@ function setupHighlightCarousel() {
   updateCarouselState();
 }
 
+function setupJourneyComparison() {
+  if (!journeyCompare) {
+    return;
+  }
+
+  journeyChoiceRoutes.forEach((route) => {
+    const length = route.getTotalLength();
+    route.style.strokeDasharray = `${length}`;
+    route.style.strokeDashoffset = reducedMotionQuery.matches ? "0" : `${length}`;
+  });
+
+  if (reducedMotionQuery.matches || !("IntersectionObserver" in window)) {
+    journeyCompare.classList.add("is-animated");
+    return;
+  }
+
+  let journeyTicking = false;
+  let journeyObserver;
+
+  const activateJourneyCompare = () => {
+    journeyCompare.classList.add("is-animated");
+    journeyObserver?.unobserve(journeyCompare);
+    window.removeEventListener("scroll", requestJourneyActivation);
+    window.removeEventListener("resize", requestJourneyActivation);
+  };
+
+  const checkJourneyVisibility = () => {
+    journeyTicking = false;
+    const rect = journeyCompare.getBoundingClientRect();
+    const isNearViewport = rect.top < window.innerHeight * 0.92 && rect.bottom > window.innerHeight * 0.08;
+
+    if (isNearViewport) {
+      activateJourneyCompare();
+    }
+  };
+
+  function requestJourneyActivation() {
+    if (journeyTicking || journeyCompare.classList.contains("is-animated")) {
+      return;
+    }
+
+    journeyTicking = true;
+    window.requestAnimationFrame(checkJourneyVisibility);
+  }
+
+  journeyObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        journeyCompare.classList.add("is-animated");
+        journeyObserver.unobserve(journeyCompare);
+      });
+    },
+    {
+      threshold: 0.22,
+      rootMargin: "0px 0px -10% 0px",
+    },
+  );
+
+  journeyObserver.observe(journeyCompare);
+  window.addEventListener("scroll", requestJourneyActivation, { passive: true });
+  window.addEventListener("resize", requestJourneyActivation);
+  requestJourneyActivation();
+  window.setTimeout(requestJourneyActivation, 300);
+  window.setTimeout(requestJourneyActivation, 900);
+}
+
 function updateRoadmapProgress() {
   if (!roadmapTimeline || !roadmapStages.length) {
     return;
@@ -744,6 +816,10 @@ reducedMotionQuery.addEventListener("change", () => {
   revealItems.forEach((item) => item.classList.add("is-visible"));
   roadmapStages.forEach((stage) => stage.classList.add("is-visible"));
   updateRoadmapProgress();
+  journeyCompare?.classList.add("is-animated");
+  journeyChoiceRoutes.forEach((route) => {
+    route.style.strokeDashoffset = "0";
+  });
   document.querySelectorAll("[data-highlight-card]").forEach((card) => {
     activateHighlightCard(card, false);
   });
@@ -755,6 +831,7 @@ setupPrecedentVisual();
 setupRevealAnimations();
 setupHighlightCards();
 setupHighlightCarousel();
+setupJourneyComparison();
 setupRoadmapTimeline();
 setupPublicContent();
 setupCopyButtons();

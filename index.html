@@ -8,7 +8,7 @@
       name="description"
       content="MVP route overlay for Outer London 03 — South London Orbital Link."
     />
-    <link rel="stylesheet" href="styles.css?v=19" />
+    <link rel="stylesheet" href="styles.css?v=20" />
   </head>
   <body>
     <a class="skip-link" href="#problem">Skip to project details</a>
@@ -198,56 +198,209 @@
         </div>
       </section>
 
-      <section class="content-section" id="problem" aria-labelledby="problem-title">
+      <section class="content-section journey-choice-section" id="problem" aria-labelledby="journey-choice-title" data-journey-compare>
         <div class="section-inner">
-          <div class="section-heading reveal">
-            <p class="section-kicker">Problem Snapshot</p>
-            <h2 id="problem-title">The orbital connectivity gap</h2>
+          <div class="section-heading journey-choice-heading reveal">
+            <p class="section-kicker">Route Choice</p>
+            <h2 id="journey-choice-title">Compare the journey</h2>
             <p>
-              Outer London orbital journeys can be slower and less direct by public
-              transport than by car, reinforcing private vehicle dependency for
-              suburb-to-suburb travel.
+              From fragmented choices to a clearer orbital rail option.
             </p>
+            <span class="journey-example">Kingston ↔ West Croydon / Croydon area</span>
           </div>
 
-          <article class="comparison-card reveal" aria-labelledby="comparison-title">
-            <div>
-              <p class="eyebrow">Checked journey-time comparison</p>
-              <h3 id="comparison-title">Current journey-time baseline</h3>
-              <p class="comparison-explainer">
-                These station-to-station checks describe the current baseline, not the
-                proposed service. They show that public transport is competitive on some
-                links, while wider door-to-door orbital trips can still feel easier by car.
+          <div class="journey-option-grid" aria-label="Journey comparison options">
+            <article class="journey-option-card journey-option-drive" data-journey-card>
+              <div class="journey-option-visual" aria-hidden="true">
+                <svg viewBox="0 0 120 58" focusable="false">
+                  <path class="mini-route mini-route-drive" d="M12 40 C35 18 62 46 92 19 C101 12 110 12 114 14" />
+                  <path class="mini-car" d="M31 31h38l8 9v9H23v-9l8-9Z" />
+                  <circle class="mini-wheel" cx="36" cy="49" r="4" />
+                  <circle class="mini-wheel" cx="65" cy="49" r="4" />
+                </svg>
+              </div>
+              <div class="journey-option-copy">
+                <h3>Drive today</h3>
+                <strong>53 min</strong>
+                <span>12 miles</span>
+                <p>Direct by road, but exposed to congestion and car dependency.</p>
+              </div>
+            </article>
+
+            <article class="journey-option-card journey-option-public" data-journey-card>
+              <div class="journey-option-visual" aria-hidden="true">
+                <svg viewBox="0 0 120 58" focusable="false">
+                  <path class="mini-route mini-route-public" d="M14 42 C35 18 55 17 60 17 C78 17 82 37 105 20" />
+                  <circle class="mini-interchange" cx="60" cy="17" r="8" />
+                  <path class="mini-rail" d="M32 39h38c6 0 10 4 10 10H22c0-6 4-10 10-10Z" />
+                  <path class="mini-rail-window" d="M36 39v10M50 39v10M64 39v10" />
+                </svg>
+              </div>
+              <div class="journey-option-copy">
+                <h3>Public transport today</h3>
+                <strong>34–41 min</strong>
+                <span>via radial interchange</span>
+                <p>
+                  Can be competitive station-to-station, but often relies on indirect
+                  routing and interchange through radial corridors such as Clapham Junction.
+                </p>
+              </div>
+            </article>
+
+            <article class="journey-option-card journey-option-slo" data-journey-card>
+              <div class="journey-option-visual" aria-hidden="true">
+                <svg viewBox="0 0 120 58" focusable="false">
+                  <path class="mini-route mini-route-slo" d="M12 36 C31 26 43 42 60 32 C78 22 91 34 108 20" />
+                  <circle cx="12" cy="36" r="3.7" />
+                  <circle cx="31" cy="30" r="3.7" />
+                  <circle cx="48" cy="38" r="3.7" />
+                  <circle cx="66" cy="29" r="3.7" />
+                  <circle cx="88" cy="31" r="3.7" />
+                  <circle cx="108" cy="20" r="3.7" />
+                </svg>
+              </div>
+              <div class="journey-option-copy">
+                <h3>With South London Orbital</h3>
+                <strong class="journey-time-target">around 30 min target</strong>
+                <span>direct orbital route</span>
+                <p>
+                  Kingston → Surbiton → Worcester Park → Sutton → Wallington →
+                  West Croydon, using existing stations and rail corridors where feasible.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <figure class="route-choice-panel reveal" aria-labelledby="route-choice-visual-title">
+            <figcaption class="route-choice-sheet">
+              <p class="eyebrow">Navigation-style comparison</p>
+              <h3 id="route-choice-visual-title">Three route choices, one clearer orbital line</h3>
+              <p>
+                The SLO target assumes a direct orbital service across six existing
+                stations and five short inter-station sections, plus reduced interchange
+                penalty and a modest walking/waiting allowance.
               </p>
+              <div class="route-choice-tabs" aria-hidden="true">
+                <span class="is-active">Rail</span>
+                <span>Road</span>
+                <span>Future</span>
+              </div>
+              <div class="route-choice-list" aria-hidden="true">
+                <span><strong>53 min</strong> Drive today</span>
+                <span><strong>34–41 min</strong> Public transport today</span>
+                <span class="is-slo"><strong>around 30 min</strong> SLO indicative target</span>
+              </div>
+            </figcaption>
+
+            <div class="route-choice-map">
+              <svg
+                class="route-choice-svg"
+                viewBox="0 0 1000 560"
+                role="img"
+                aria-label="Comparison of driving, current public transport and future SLO route patterns"
+              >
+                <defs>
+                  <filter id="choice-soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#10233f" flood-opacity="0.14" />
+                  </filter>
+                </defs>
+
+                <g class="choice-map-base" aria-hidden="true">
+                  <path class="choice-park" d="M8 40 C122 6 210 72 308 48 C430 18 498 26 560 104 C628 190 726 112 824 130 C910 146 963 198 998 282 L998 0 L8 0Z" />
+                  <path class="choice-park choice-park-south" d="M0 424 C108 362 204 438 302 404 C444 354 546 438 672 394 C794 350 882 386 1000 344 L1000 560 L0 560Z" />
+                  <path class="choice-water" d="M-16 176 C124 148 186 190 282 160 C372 132 442 100 526 134 C614 170 690 190 798 148 C892 112 952 132 1024 92" />
+                  <g class="choice-minor-roads">
+                    <path d="M22 278 C150 232 260 244 376 300 C506 362 606 334 724 286 C830 244 900 246 982 268" />
+                    <path d="M98 72 C154 166 214 236 316 272 C438 316 520 378 602 496" />
+                    <path d="M318 22 C350 124 356 224 330 334 C308 428 272 490 214 552" />
+                    <path d="M514 22 C542 126 560 232 548 350 C540 434 526 500 486 562" />
+                    <path d="M722 22 C746 118 794 190 876 238 C936 274 978 320 1012 396" />
+                    <path d="M34 490 C172 464 310 430 456 382 C610 332 774 296 972 174" />
+                  </g>
+                  <g class="choice-rail-context">
+                    <path d="M78 386 C216 314 326 384 456 332 C572 284 690 316 904 208" />
+                    <path d="M420 104 C516 142 612 194 688 280 C756 358 842 332 956 274" />
+                  </g>
+                  <text class="choice-place choice-place-west" x="86" y="432">Kingston</text>
+                  <text class="choice-place" x="515" y="384">Sutton</text>
+                  <text class="choice-place" x="780" y="252">Croydon area</text>
+                </g>
+
+                <path
+                  class="choice-route choice-route-drive"
+                  data-choice-route
+                  d="M92 388 C206 328, 267 428, 388 366 C510 302, 591 410, 704 342 C782 296, 852 294, 928 314"
+                />
+                <g class="choice-callout choice-drive-callout" aria-hidden="true">
+                  <rect x="645" y="278" width="218" height="42" rx="14" />
+                  <text x="665" y="305">road congestion exposure</text>
+                </g>
+
+                <path
+                  class="choice-route choice-route-public"
+                  data-choice-route
+                  d="M92 360 C188 270, 286 180, 424 160 C534 144, 625 182, 684 254 C760 347, 820 330, 928 268"
+                />
+                <g class="choice-interchange" aria-hidden="true" transform="translate(424 160)">
+                  <circle r="18" />
+                  <circle r="7" />
+                </g>
+                <g class="choice-callout choice-public-callout" aria-hidden="true">
+                  <rect x="448" y="106" width="292" height="52" rx="14" />
+                  <text x="468" y="128">
+                    <tspan>Clapham Junction</tspan>
+                    <tspan x="468" dy="19">radial interchange</tspan>
+                  </text>
+                </g>
+                <g class="choice-callout choice-public-pattern-callout" aria-hidden="true">
+                  <rect x="492" y="210" width="296" height="42" rx="14" />
+                  <text x="512" y="237">current radial interchange pattern</text>
+                </g>
+
+                <path
+                  class="choice-route choice-route-slo"
+                  data-choice-route
+                  d="M92 384 C210 316, 291 383, 394 338 C497 294, 574 334, 656 302 C754 264, 831 276, 928 218"
+                />
+                <g class="choice-stations" aria-label="Future SLO station sequence">
+                  <g transform="translate(92 384)">
+                    <circle r="13" />
+                    <text x="-48" y="39">Kingston</text>
+                  </g>
+                  <g transform="translate(250 342)">
+                    <circle r="11" />
+                    <text x="-42" y="-30">Surbiton</text>
+                  </g>
+                  <g transform="translate(394 338)">
+                    <circle r="11" />
+                    <text x="-82" y="42">Worcester Park</text>
+                  </g>
+                  <g transform="translate(552 318)">
+                    <circle r="13" />
+                    <text x="-34" y="-32">Sutton</text>
+                  </g>
+                  <g transform="translate(730 282)">
+                    <circle r="11" />
+                    <text x="-48" y="40">Wallington</text>
+                  </g>
+                  <g transform="translate(928 218)">
+                    <circle r="13" />
+                    <text x="-98" y="-30">West Croydon</text>
+                  </g>
+                </g>
+                <g class="choice-callout choice-slo-callout" aria-hidden="true">
+                  <rect x="694" y="168" width="208" height="42" rx="14" />
+                  <text x="714" y="195">direct orbital service</text>
+                </g>
+              </svg>
             </div>
-            <div class="journey-table" role="table" aria-label="Checked journey-time comparison">
-              <div class="journey-row journey-head" role="row">
-                <span role="columnheader">Journey</span>
-                <span role="columnheader">TfL public transport</span>
-                <span role="columnheader">Google Maps car</span>
-              </div>
-              <div class="journey-row" role="row">
-                <span role="cell" data-label="Journey">Sutton → Kingston</span>
-                <span role="cell" data-label="TfL public transport">35 min</span>
-                <span role="cell" data-label="Google Maps car">37 min</span>
-              </div>
-              <div class="journey-row" role="row">
-                <span role="cell" data-label="Journey">Sutton → West Croydon</span>
-                <span role="cell" data-label="TfL public transport">15 min</span>
-                <span role="cell" data-label="Google Maps car">29 min</span>
-              </div>
-              <div class="journey-row" role="row">
-                <span role="cell" data-label="Journey">West Croydon → Kingston</span>
-                <span role="cell" data-label="TfL public transport">52 min</span>
-                <span role="cell" data-label="Google Maps car">57 min</span>
-              </div>
-            </div>
-            <p class="fine-print">
-              Public transport times from TfL Journey Planner; car times from Google Maps
-              driving directions. Checked 9 June 2026 for station-to-station trips departing
-              around 16:45; journey times vary by traffic, service pattern and exact origin.
-            </p>
-          </article>
+          </figure>
+
+          <p class="journey-caveat reveal">
+            Indicative comparison only. Current times vary by time of day, origin/destination
+            and service disruption. SLO time is a target estimate subject to feasibility,
+            timetable and demand modelling.
+          </p>
         </div>
       </section>
 
@@ -769,7 +922,7 @@
             </p>
           </div>
           <div class="metric-grid" aria-label="Evaluation indicators">
-            <article class="metric-card reveal-card">Current journey-time baseline</article>
+            <article class="metric-card reveal-card">Journey-time competitiveness</article>
             <article class="metric-card reveal-card">Number of interchanges</article>
             <article class="metric-card reveal-card">Service reliability</article>
             <article class="metric-card reveal-card">Passenger demand</article>
@@ -827,6 +980,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=19" defer></script>
+    <script src="script.js?v=20" defer></script>
   </body>
 </html>
