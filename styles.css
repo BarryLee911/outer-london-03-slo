@@ -1305,6 +1305,7 @@ h1 {
 }
 
 .reference-card {
+  min-width: 0;
   padding: 28px;
 }
 
@@ -1355,7 +1356,9 @@ h1 {
 }
 
 .reference-text {
+  min-width: 0;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
   color: var(--muted);
   font: inherit;
   font-size: 0.98rem;
@@ -1588,7 +1591,9 @@ h1 {
   }
 
   .nav-links {
+    flex-wrap: wrap;
     justify-content: flex-start;
+    overflow-x: visible;
     width: 100%;
   }
 
