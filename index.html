@@ -8,7 +8,7 @@
       name="description"
       content="MVP route overlay for Outer London 03 — South London Orbital Link."
     />
-    <link rel="stylesheet" href="styles.css?v=17" />
+    <link rel="stylesheet" href="styles.css?v=18" />
   </head>
   <body>
     <a class="skip-link" href="#problem">Skip to project details</a>
@@ -116,13 +116,12 @@
             </p>
           </div>
 
-          <div class="hero-actions" aria-label="Hero actions" aria-hidden="true">
-            <a class="hero-button hero-button-primary" href="#solution" tabindex="-1">
-              Explore the route
+          <div class="hero-actions" aria-label="Continue reading" aria-hidden="true">
+            <a class="hero-scroll-cue" href="#highlights" tabindex="-1">
+              <span>Scroll for more detail</span>
+              <span class="hero-scroll-mark" aria-hidden="true"></span>
             </a>
-            <a class="hero-button hero-button-secondary" href="#references" tabindex="-1">
-              References
-            </a>
+            <a class="hero-reference-link" href="#references" tabindex="-1">References</a>
           </div>
         </div>
       </section>
@@ -133,55 +132,68 @@
             <h2 id="highlights-title">Get the highlights.</h2>
           </div>
 
-          <div class="highlight-grid" aria-label="Proposal highlights">
-            <article class="highlight-card highlight-card-journey reveal-card" data-highlight-card>
-              <div class="highlight-visual journey-visual" aria-hidden="true">
-                <span class="journey-time journey-time-before">70 mins</span>
-                <span class="journey-route-line"></span>
-                <span class="journey-arrow">→</span>
-                <span class="journey-time journey-time-after">35–40 mins</span>
-              </div>
-              <div class="highlight-copy">
-                <h3>Faster orbital journeys.</h3>
-                <p>Indicative Sutton–Kingston journey-time improvement target.</p>
-              </div>
-            </article>
+          <div class="highlight-carousel" data-highlight-carousel>
+            <div class="highlight-swipe-hint" data-highlight-swipe-hint aria-hidden="true">
+              <span>Swipe for more</span>
+              <span class="swipe-track"></span>
+            </div>
 
-            <article class="highlight-card highlight-card-corridor reveal-card" data-highlight-card>
-              <div class="highlight-dot-field" aria-hidden="true"></div>
-              <div class="highlight-visual corridor-visual">
-                <div>
-                  <strong data-count-up data-count-to="768400" data-count-format="comma">768,400</strong>
-                  <span>residents</span>
+            <div class="highlight-grid" aria-label="Proposal highlights">
+              <article class="highlight-card highlight-card-journey reveal-card" data-highlight-card>
+                <div class="highlight-visual journey-visual" aria-hidden="true">
+                  <span class="journey-time journey-time-before">70 mins</span>
+                  <span class="journey-route-line"></span>
+                  <span class="journey-arrow">→</span>
+                  <span class="journey-time journey-time-after">35–40 mins</span>
                 </div>
-                <div>
-                  <strong data-count-up data-count-to="260000" data-count-format="comma">260,000</strong>
-                  <span>jobs</span>
+                <div class="highlight-copy">
+                  <h3>Faster orbital journeys.</h3>
+                  <p>Indicative Sutton–Kingston journey-time improvement target.</p>
                 </div>
-              </div>
-              <div class="highlight-copy">
-                <h3>A corridor worth serving.</h3>
-                <p>Population and employment base across the Croydon–Sutton–Kingston corridor.</p>
-              </div>
-            </article>
+              </article>
 
-            <article class="highlight-card highlight-card-mode reveal-card" data-highlight-card>
-              <div class="mode-road" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="highlight-visual mode-visual">
-                <span class="highlight-badge">10% mode-shift scenario</span>
-                <strong>≈1.1m fewer car trips/year</strong>
-              </div>
-              <div class="highlight-copy">
-                <h3>Less pressure on car-dependent corridors.</h3>
-                <p>Scenario estimate, subject to detailed demand modelling.</p>
-              </div>
-            </article>
+              <article class="highlight-card highlight-card-corridor reveal-card" data-highlight-card>
+                <div class="highlight-dot-field" aria-hidden="true"></div>
+                <div class="highlight-visual corridor-visual">
+                  <div>
+                    <strong data-count-up data-count-to="768400" data-count-format="comma">768,400</strong>
+                    <span>residents</span>
+                  </div>
+                  <div>
+                    <strong data-count-up data-count-to="260000" data-count-format="comma">260,000</strong>
+                    <span>jobs</span>
+                  </div>
+                </div>
+                <div class="highlight-copy">
+                  <h3>A corridor worth serving.</h3>
+                  <p>Population and employment base across the Croydon–Sutton–Kingston corridor.</p>
+                </div>
+              </article>
+
+              <article class="highlight-card highlight-card-mode reveal-card" data-highlight-card>
+                <div class="mode-road" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="highlight-visual mode-visual">
+                  <span class="highlight-badge">10% mode-shift scenario</span>
+                  <strong>≈1.1m fewer car trips/year</strong>
+                </div>
+                <div class="highlight-copy">
+                  <h3>Less pressure on car-dependent corridors.</h3>
+                  <p>Scenario estimate, subject to detailed demand modelling.</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="highlight-carousel-dots" aria-hidden="true">
+              <span class="is-active" data-highlight-dot></span>
+              <span data-highlight-dot></span>
+              <span data-highlight-dot></span>
+            </div>
           </div>
         </div>
       </section>
@@ -640,6 +652,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=17" defer></script>
+    <script src="script.js?v=18" defer></script>
   </body>
 </html>

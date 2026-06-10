@@ -441,6 +441,47 @@ function setupHighlightCards() {
   highlightCards.forEach((card) => highlightObserver.observe(card));
 }
 
+function setupHighlightCarousel() {
+  const carousel = document.querySelector("[data-highlight-carousel]");
+  const grid = carousel?.querySelector(".highlight-grid");
+  const cards = Array.from(carousel?.querySelectorAll(".highlight-card") || []);
+  const dots = Array.from(carousel?.querySelectorAll("[data-highlight-dot]") || []);
+
+  if (!carousel || !grid || !cards.length || !dots.length) {
+    return;
+  }
+
+  let ticking = false;
+
+  const updateCarouselState = () => {
+    const currentIndex = cards.reduce((closestIndex, card, index) => {
+      const currentDistance = Math.abs(card.offsetLeft - grid.scrollLeft);
+      const closestDistance = Math.abs(cards[closestIndex].offsetLeft - grid.scrollLeft);
+      return currentDistance < closestDistance ? index : closestIndex;
+    }, 0);
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("is-active", index === currentIndex);
+    });
+
+    carousel.classList.toggle("has-user-scrolled", grid.scrollLeft > 12);
+    ticking = false;
+  };
+
+  const requestCarouselUpdate = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    window.requestAnimationFrame(updateCarouselState);
+  };
+
+  grid.addEventListener("scroll", requestCarouselUpdate, { passive: true });
+  window.addEventListener("resize", requestCarouselUpdate);
+  updateCarouselState();
+}
+
 async function setupPrecedentVisual() {
   const visual = document.querySelector(".precedent-visual[data-precedent-src]");
 
@@ -663,6 +704,7 @@ setupHeatmapVisual();
 setupPrecedentVisual();
 setupRevealAnimations();
 setupHighlightCards();
+setupHighlightCarousel();
 setupPublicContent();
 setupCopyButtons();
 setupSloSchematic();
