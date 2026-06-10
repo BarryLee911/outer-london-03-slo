@@ -5,6 +5,8 @@ const routePath = document.querySelector("#route-path");
 const routeShadow = document.querySelector(".route-shadow");
 const stations = Array.from(document.querySelectorAll(".station"));
 const completionLabel = document.querySelector("#completion-label");
+const heroActions = document.querySelector(".hero-actions");
+const heroActionLinks = Array.from(document.querySelectorAll(".hero-actions a"));
 const siteNav = document.querySelector(".site-nav");
 const heatmapSection = document.querySelector("#corridor");
 const heatmapCard = document.querySelector(".heatmap-card");
@@ -105,6 +107,23 @@ function requestNavUpdate() {
   });
 }
 
+function setHeroComplete(isComplete) {
+  scene?.classList.toggle("hero-complete", isComplete);
+
+  if (!heroActions) {
+    return;
+  }
+
+  heroActions.setAttribute("aria-hidden", isComplete ? "false" : "true");
+  heroActionLinks.forEach((link) => {
+    if (isComplete) {
+      link.removeAttribute("tabindex");
+    } else {
+      link.setAttribute("tabindex", "-1");
+    }
+  });
+}
+
 function getCameraStop(progress) {
   const nextIndex = cameraStops.findIndex((stop) => progress <= stop.progress);
 
@@ -165,6 +184,7 @@ function setRouteProgress(progress) {
   });
 
   completionLabel.classList.toggle("is-visible", progress >= 0.985);
+  setHeroComplete(progress >= 0.88);
 }
 
 function setHeatmapProgress() {
