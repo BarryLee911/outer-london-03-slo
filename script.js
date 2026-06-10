@@ -5,6 +5,7 @@ const routePath = document.querySelector("#route-path");
 const routeShadow = document.querySelector(".route-shadow");
 const stations = Array.from(document.querySelectorAll(".station"));
 const completionLabel = document.querySelector("#completion-label");
+const siteNav = document.querySelector(".site-nav");
 const heatmapSection = document.querySelector("#corridor");
 const heatmapCard = document.querySelector(".heatmap-card");
 const heatmapHotspots = Array.from(document.querySelectorAll(".heatmap-hotspot"));
@@ -21,6 +22,9 @@ const compactSchematicQuery = window.matchMedia("(max-width: 980px)");
 let routeLength = 0;
 let sloWestLength = 0;
 let sloEastLength = 0;
+let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+let navHidden = false;
+let navTicking = false;
 
 const fallbackContent = {
   references: `[1] Transport for London — Travel in London reports.
@@ -57,6 +61,48 @@ function lerp(start, end, amount) {
 
 function smoothStep(value) {
   return value * value * (3 - 2 * value);
+}
+
+function setNavHidden(hidden) {
+  if (!siteNav || navHidden === hidden) {
+    return;
+  }
+
+  navHidden = hidden;
+  siteNav.classList.toggle("is-hidden", hidden);
+  document.documentElement.classList.toggle("nav-hidden", hidden);
+  document.body.classList.toggle("nav-hidden", hidden);
+}
+
+function updateScrollAwareNav() {
+  if (!siteNav) {
+    return;
+  }
+
+  const currentScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+  const delta = currentScrollY - lastScrollY;
+
+  if (currentScrollY < 24) {
+    setNavHidden(false);
+  } else if (delta > 12) {
+    setNavHidden(true);
+  } else if (delta < -8) {
+    setNavHidden(false);
+  }
+
+  lastScrollY = currentScrollY;
+}
+
+function requestNavUpdate() {
+  if (navTicking) {
+    return;
+  }
+
+  navTicking = true;
+  window.requestAnimationFrame(() => {
+    updateScrollAwareNav();
+    navTicking = false;
+  });
 }
 
 function getCameraStop(progress) {
@@ -489,8 +535,18 @@ function setupCopyButtons() {
   });
 }
 
-window.addEventListener("scroll", update, { passive: true });
-window.addEventListener("resize", update);
+function handleScroll() {
+  update();
+  requestNavUpdate();
+}
+
+siteNav?.addEventListener("focusin", () => setNavHidden(false));
+
+window.addEventListener("scroll", handleScroll, { passive: true });
+window.addEventListener("resize", () => {
+  lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+  update();
+});
 reducedMotionQuery.addEventListener("change", () => {
   revealItems.forEach((item) => item.classList.add("is-visible"));
   update();
