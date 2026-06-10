@@ -8,7 +8,7 @@
       name="description"
       content="MVP route overlay for Outer London 03 — South London Orbital Link."
     />
-    <link rel="stylesheet" href="styles.css?v=24" />
+    <link rel="stylesheet" href="styles.css?v=25" />
   </head>
   <body>
     <a class="skip-link" href="#problem">Skip to project details</a>
@@ -117,9 +117,13 @@
           </div>
 
           <div class="hero-actions" aria-label="Continue reading" aria-hidden="true">
-            <a class="hero-scroll-cue" href="#highlights" tabindex="-1">
-              <span>Scroll for more detail</span>
-              <span class="hero-scroll-mark" aria-hidden="true"></span>
+            <a class="sticky-scroll-cue hero-scroll-cue" href="#highlights" data-sticky-cue="hero" tabindex="-1">
+              <span class="sticky-scroll-cue__copy">
+                <span class="sticky-scroll-cue__label">Keep scrolling</span>
+                <span class="sticky-scroll-cue__meta" data-cue-meta>Route drawing</span>
+              </span>
+              <span class="sticky-scroll-cue__bar" aria-hidden="true"></span>
+              <span class="sticky-scroll-cue__arrow" aria-hidden="true"></span>
             </a>
             <a class="hero-reference-link" href="#references" tabindex="-1">References</a>
           </div>
@@ -476,6 +480,14 @@
               project demographic mapping; dataset/source to be confirmed.
             </p>
           </div>
+          <div class="sticky-scroll-cue corridor-scroll-cue" data-sticky-cue="corridor" aria-hidden="true">
+            <span class="sticky-scroll-cue__copy">
+              <span class="sticky-scroll-cue__label">Keep scrolling</span>
+              <span class="sticky-scroll-cue__meta" data-cue-meta>Reveal corridor clusters</span>
+            </span>
+            <span class="sticky-scroll-cue__bar" aria-hidden="true"></span>
+            <span class="sticky-scroll-cue__arrow" aria-hidden="true"></span>
+          </div>
           </div>
         </div>
 
@@ -655,6 +667,14 @@
                 </div>
 
               </figure>
+              <div class="sticky-scroll-cue works-scroll-cue" data-sticky-cue="works" aria-hidden="true">
+                <span class="sticky-scroll-cue__copy">
+                  <span class="sticky-scroll-cue__label">Keep scrolling</span>
+                  <span class="sticky-scroll-cue__meta" data-cue-meta>Build the SLO service</span>
+                </span>
+                <span class="sticky-scroll-cue__bar" aria-hidden="true"></span>
+                <span class="sticky-scroll-cue__arrow" aria-hidden="true"></span>
+              </div>
             </div>
           </div>
 
@@ -993,6 +1013,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=24" defer></script>
+    <script src="script.js?v=25" defer></script>
   </body>
 </html>

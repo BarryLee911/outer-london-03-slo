@@ -470,6 +470,146 @@ h1 {
   color: var(--text-strong);
 }
 
+.sticky-scroll-cue {
+  --cue-progress: 0%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 84px 18px;
+  align-items: center;
+  gap: 12px;
+  width: min(360px, calc(100% - 24px));
+  min-height: 46px;
+  border: 1px solid rgba(16, 35, 63, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text-strong);
+  padding: 8px 12px 8px 16px;
+  box-shadow: 0 18px 42px rgba(16, 35, 63, 0.1);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  pointer-events: none;
+  text-align: left;
+  text-decoration: none;
+  transform: translateY(10px);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.sticky-scroll-cue.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+a.sticky-scroll-cue.is-visible {
+  pointer-events: auto;
+}
+
+.sticky-scroll-cue.is-complete {
+  opacity: 0.42;
+  transform: translateY(2px);
+}
+
+.sticky-scroll-cue:hover,
+.sticky-scroll-cue:focus-visible {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 22px 52px rgba(16, 35, 63, 0.13);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.sticky-scroll-cue__copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sticky-scroll-cue__label {
+  color: var(--text-strong);
+  font-size: 0.82rem;
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.sticky-scroll-cue__meta {
+  overflow: hidden;
+  color: rgba(91, 102, 117, 0.88);
+  font-size: 0.68rem;
+  font-weight: 720;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sticky-scroll-cue__bar {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(16, 35, 63, 0.12);
+}
+
+.sticky-scroll-cue__bar::before {
+  position: absolute;
+  inset: 0;
+  width: var(--cue-progress);
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(240, 120, 42, 0.86), var(--line));
+  content: "";
+  transition: width 120ms linear;
+}
+
+.sticky-scroll-cue__arrow {
+  position: relative;
+  display: inline-grid;
+  width: 18px;
+  height: 24px;
+  place-items: center;
+}
+
+.sticky-scroll-cue__arrow::before {
+  width: 1px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(16, 35, 63, 0.22);
+  content: "";
+}
+
+.sticky-scroll-cue__arrow::after {
+  position: absolute;
+  bottom: 3px;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid rgba(16, 35, 63, 0.62);
+  border-bottom: 2px solid rgba(16, 35, 63, 0.62);
+  content: "";
+  transform: rotate(45deg);
+  animation: sticky-cue-arrow 1.35s ease-in-out infinite;
+}
+
+.corridor-scroll-cue,
+.works-scroll-cue {
+  z-index: 4;
+  justify-self: center;
+  margin: -2px auto 0;
+}
+
+@keyframes sticky-cue-arrow {
+  0%,
+  100% {
+    opacity: 0.46;
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: translateY(3px) rotate(45deg);
+  }
+}
+
 .hero-scroll-mark {
   position: relative;
   width: 18px;
@@ -3234,6 +3374,26 @@ h1 {
     font-size: 0.9rem;
   }
 
+  .sticky-scroll-cue {
+    grid-template-columns: minmax(0, 1fr) 62px 16px;
+    gap: 8px;
+    width: min(318px, calc(100vw - 36px));
+    min-height: 42px;
+    padding: 7px 10px 7px 13px;
+  }
+
+  .sticky-scroll-cue__label {
+    font-size: 0.76rem;
+  }
+
+  .sticky-scroll-cue__meta {
+    font-size: 0.62rem;
+  }
+
+  .sticky-scroll-cue__bar {
+    height: 3px;
+  }
+
   .stats-grid,
   .card-grid.three-up,
   .metric-grid,
@@ -3743,6 +3903,7 @@ h1 {
 
   .hero-scroll-mark::before,
   .hero-scroll-mark::after,
+  .sticky-scroll-cue__arrow::after,
   .swipe-track::after {
     animation: none;
   }

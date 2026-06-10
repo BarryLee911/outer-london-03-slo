@@ -7,6 +7,11 @@ const stations = Array.from(document.querySelectorAll(".station"));
 const completionLabel = document.querySelector("#completion-label");
 const heroActions = document.querySelector(".hero-actions");
 const heroActionLinks = Array.from(document.querySelectorAll(".hero-actions a"));
+const stickyCues = {
+  hero: document.querySelector('[data-sticky-cue="hero"]'),
+  corridor: document.querySelector('[data-sticky-cue="corridor"]'),
+  works: document.querySelector('[data-sticky-cue="works"]'),
+};
 const siteNav = document.querySelector(".site-nav");
 const journeyCompare = document.querySelector("[data-journey-compare]");
 const journeyChoiceRoutes = Array.from(document.querySelectorAll("[data-choice-route]"));
@@ -128,6 +133,39 @@ function setHeroComplete(isComplete) {
   });
 }
 
+function setStickyCue(cue, progress, state = {}) {
+  if (!cue) {
+    return;
+  }
+
+  const cueProgress = clamp(progress, 0, 1);
+  const meta = cue.querySelector("[data-cue-meta]");
+  const completeAt = state.completeAt ?? 0.98;
+  const isComplete = cueProgress >= completeAt;
+  let isVisible = Boolean(state.visible);
+
+  if (reducedMotionQuery.matches && state.hideWhenReduced) {
+    isVisible = false;
+  }
+
+  cue.style.setProperty("--cue-progress", `${Math.round(cueProgress * 100)}%`);
+  cue.classList.toggle("is-visible", isVisible);
+  cue.classList.toggle("is-complete", isComplete);
+  cue.setAttribute("aria-hidden", isVisible ? "false" : "true");
+
+  if (meta && state.meta) {
+    meta.textContent = state.meta;
+  }
+
+  if (cue.matches("a")) {
+    if (isVisible) {
+      cue.removeAttribute("tabindex");
+    } else {
+      cue.setAttribute("tabindex", "-1");
+    }
+  }
+}
+
 function getCameraStop(progress) {
   const nextIndex = cameraStops.findIndex((stop) => progress <= stop.progress);
 
@@ -189,6 +227,11 @@ function setRouteProgress(progress) {
 
   completionLabel.classList.toggle("is-visible", progress >= 0.985);
   setHeroComplete(progress >= 0.88);
+  setStickyCue(stickyCues.hero, progress, {
+    visible: progress >= 0.88,
+    completeAt: 0.985,
+    meta: "Route drawing",
+  });
 }
 
 function setHeatmapProgress() {
@@ -198,6 +241,12 @@ function setHeatmapProgress() {
 
   if (reducedMotionQuery.matches) {
     heatmapHotspots.forEach((hotspot) => hotspot.classList.add("is-visible"));
+    setStickyCue(stickyCues.corridor, 1, {
+      visible: false,
+      completeAt: 0.98,
+      meta: "Reveal corridor clusters",
+      hideWhenReduced: true,
+    });
     return;
   }
 
@@ -205,10 +254,17 @@ function setHeatmapProgress() {
   const start = window.innerHeight * 0.35;
   const end = -window.innerHeight * 1.05;
   const progress = clamp((start - rect.top) / Math.max(1, start - end), 0, 1);
+  const cueProgress = clamp(progress / 0.7, 0, 1);
 
   heatmapHotspots.forEach((hotspot) => {
     const revealAt = Number.parseFloat(hotspot.dataset.revealAt || "0");
     hotspot.classList.toggle("is-visible", progress >= revealAt);
+  });
+
+  setStickyCue(stickyCues.corridor, cueProgress, {
+    visible: progress > 0.04 && progress < 0.72,
+    completeAt: 0.98,
+    meta: "Reveal corridor clusters",
   });
 }
 
@@ -256,6 +312,7 @@ function setSloSchematicProgress(progress) {
   const westProgress = clamp((progress - 0.08) / 0.36, 0, 1);
   const eastProgress = clamp((progress - eastStart) / eastSpan, 0, 1);
   const activeStep = progress < step2Start ? "1" : progress < step3Start ? "2" : "3";
+  const cueProgress = clamp(progress / 0.94, 0, 1);
 
   setPathDrawProgress(sloRouteWest, sloWestLength, westProgress);
   setPathDrawProgress(sloRouteEast, sloEastLength, eastProgress);
@@ -274,6 +331,13 @@ function setSloSchematicProgress(progress) {
     const index = Number.parseInt(station.dataset.stationIndex || "0", 10);
     const reachedAt = [0.12, 0.2, 0.34, 0.46, 0.74, 0.92][index] || 1;
     station.classList.toggle("is-reached", progress >= reachedAt);
+  });
+
+  setStickyCue(stickyCues.works, cueProgress, {
+    visible: progress > 0.04,
+    completeAt: 0.98,
+    meta: `Build the SLO service · Step ${activeStep} of 3`,
+    hideWhenReduced: true,
   });
 }
 
