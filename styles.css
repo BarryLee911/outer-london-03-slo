@@ -43,6 +43,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(245, 245, 247, 0.98) 36%),
     var(--page-bg);
@@ -947,7 +948,9 @@ h1 {
 .evidence-card,
 .comparison-card,
 .contrast-box,
-.reference-card {
+.reference-card,
+.stage-card,
+.tradeoff-card {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
@@ -1629,6 +1632,270 @@ h1 {
   padding-left: 20px;
 }
 
+.roadmap-section,
+.tradeoff-section {
+  background:
+    radial-gradient(circle at 20% 4%, rgba(240, 120, 42, 0.08), transparent 32%),
+    linear-gradient(180deg, #f6f7f9 0%, #f1f2f5 100%);
+}
+
+.roadmap-timeline {
+  position: relative;
+  display: grid;
+  gap: 22px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 8px 0 0;
+  --roadmap-progress: 0%;
+}
+
+.timeline-track {
+  position: absolute;
+  top: 22px;
+  bottom: 74px;
+  left: 48px;
+  width: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(16, 35, 63, 0.08);
+}
+
+.timeline-progress {
+  display: block;
+  width: 100%;
+  height: var(--roadmap-progress);
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(240, 120, 42, 0.48), var(--line));
+  box-shadow: 0 0 24px rgba(240, 120, 42, 0.28);
+  transition: height 640ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.timeline-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.stage-marker {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(240, 120, 42, 0.26);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.94), rgba(255, 246, 240, 0.92)),
+    #ffffff;
+  color: var(--line);
+  box-shadow:
+    0 18px 42px rgba(16, 35, 63, 0.09),
+    0 0 0 10px rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+  font-weight: 830;
+  letter-spacing: 0;
+  transform: scale(0.88);
+  transition:
+    box-shadow 260ms ease,
+    transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.timeline-stage.is-visible .stage-marker {
+  box-shadow:
+    0 18px 48px rgba(240, 120, 42, 0.16),
+    0 0 0 10px rgba(255, 255, 255, 0.82);
+  transform: scale(1);
+}
+
+.stage-card {
+  display: grid;
+  gap: 18px;
+  min-height: 190px;
+  border-radius: 22px;
+  padding: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.9)),
+    #ffffff;
+  transition:
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+
+.timeline-stage.is-visible .stage-card {
+  border-color: rgba(240, 120, 42, 0.22);
+  box-shadow:
+    0 26px 68px rgba(16, 35, 63, 0.1),
+    0 0 46px rgba(240, 120, 42, 0.06);
+}
+
+.stage-card-head {
+  display: grid;
+  gap: 10px;
+}
+
+.stage-time {
+  width: fit-content;
+  border: 1px solid rgba(240, 120, 42, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 248, 243, 0.84);
+  color: #b9551e;
+  padding: 7px 10px;
+  font-size: 0.78rem;
+  font-weight: 780;
+}
+
+.stage-card h3,
+.tradeoff-card h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+  line-height: 1.08;
+  font-weight: 780;
+}
+
+.stage-card ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.46;
+}
+
+.roadmap-note {
+  margin: 4px 0 0 96px;
+  border: 1px solid rgba(16, 35, 63, 0.09);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted);
+  box-shadow: 0 16px 38px rgba(16, 35, 63, 0.07);
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 680;
+  line-height: 1.35;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease;
+}
+
+.roadmap-timeline.is-complete .roadmap-note {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tradeoff-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.tradeoff-card {
+  position: relative;
+  display: grid;
+  gap: 20px;
+  min-height: 330px;
+  overflow: hidden;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(240, 120, 42, 0.1), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.92));
+  padding: 30px;
+  outline: none;
+  isolation: isolate;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.tradeoff-card::after {
+  content: "";
+  position: absolute;
+  right: -44px;
+  bottom: -54px;
+  z-index: -1;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(16, 35, 63, 0.06);
+  border-radius: 50%;
+}
+
+.tradeoff-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(240, 120, 42, 0.18);
+  border-radius: 18px;
+  background: rgba(255, 247, 241, 0.82);
+  color: var(--line);
+}
+
+.tradeoff-icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.tradeoff-icon path,
+.tradeoff-icon circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.risk-mitigation {
+  display: grid;
+  gap: 12px;
+}
+
+.risk-mitigation p {
+  margin: 0;
+  border: 1px solid rgba(16, 35, 63, 0.08);
+  border-radius: 16px;
+  background: rgba(247, 248, 250, 0.72);
+  color: var(--muted);
+  padding: 14px 15px;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.risk-mitigation p + p {
+  border-color: rgba(240, 120, 42, 0.2);
+  background: rgba(255, 248, 243, 0.7);
+}
+
+.risk-mitigation span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-strong);
+  font-size: 0.72rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.risk-mitigation p + p span {
+  color: var(--line);
+}
+
+.tradeoff-note {
+  max-width: 900px;
+  margin: 26px auto 0;
+  color: var(--text);
+  font-size: clamp(1.06rem, 1.7vw, 1.32rem);
+  font-weight: 680;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .precedent-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1fr);
@@ -1914,7 +2181,8 @@ h1 {
   .evidence-card,
   .comparison-card,
   .contrast-box,
-  .reference-card {
+  .reference-card,
+  .tradeoff-card {
     transition:
       transform 180ms ease,
       box-shadow 180ms ease,
@@ -1929,10 +2197,18 @@ h1 {
   .evidence-card:hover,
   .comparison-card:hover,
   .contrast-box:hover,
-  .reference-card:hover {
+  .reference-card:hover,
+  .tradeoff-card:hover,
+  .tradeoff-card:focus-visible {
     transform: translateY(-4px);
     border-color: var(--border-strong);
     box-shadow: 0 22px 58px rgba(16, 35, 63, 0.11);
+  }
+
+  .tradeoff-card:hover .risk-mitigation p + p,
+  .tradeoff-card:focus-visible .risk-mitigation p + p {
+    border-color: rgba(240, 120, 42, 0.34);
+    background: rgba(255, 246, 239, 0.95);
   }
 }
 
@@ -1943,6 +2219,7 @@ h1 {
   .fact-strip,
   .evidence-card-grid,
   .precedent-layout,
+  .tradeoff-grid,
   .references-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2064,6 +2341,10 @@ h1 {
   .fine-print,
   .fact-strip {
     grid-column: auto;
+  }
+
+  .roadmap-timeline {
+    max-width: 860px;
   }
 
   .works-schematic {
@@ -2298,6 +2579,40 @@ h1 {
     grid-row: auto;
   }
 
+  .roadmap-timeline {
+    gap: 16px;
+  }
+
+  .timeline-track {
+    left: 34px;
+  }
+
+  .timeline-stage {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .stage-marker {
+    width: 54px;
+    height: 54px;
+    font-size: 0.82rem;
+  }
+
+  .stage-card {
+    min-height: auto;
+    border-radius: 18px;
+    padding: 22px;
+  }
+
+  .stage-card ul {
+    font-size: 0.94rem;
+  }
+
+  .roadmap-note {
+    margin-left: 70px;
+    border-radius: 18px;
+  }
+
   .reference-card-head {
     flex-direction: column;
   }
@@ -2422,6 +2737,20 @@ h1 {
   .works-final-label {
     font-size: 17px;
   }
+
+  .tradeoff-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tradeoff-card {
+    min-height: auto;
+    border-radius: 20px;
+    padding: 24px;
+  }
+
+  .risk-mitigation p {
+    font-size: 0.94rem;
+  }
 }
 
 @media (max-width: 520px) {
@@ -2529,6 +2858,51 @@ h1 {
   .works-legend .legend-node-double::after {
     inset: -6px;
   }
+
+  .roadmap-section,
+  .tradeoff-section {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .timeline-track {
+    left: 25px;
+    bottom: 96px;
+  }
+
+  .timeline-stage {
+    grid-template-columns: 50px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .stage-marker {
+    width: 42px;
+    height: 42px;
+    box-shadow:
+      0 12px 30px rgba(16, 35, 63, 0.08),
+      0 0 0 7px rgba(255, 255, 255, 0.8);
+    font-size: 0.72rem;
+  }
+
+  .stage-card {
+    padding: 18px;
+  }
+
+  .stage-card h3,
+  .tradeoff-card h3 {
+    font-size: 1.32rem;
+  }
+
+  .roadmap-note {
+    margin-left: 50px;
+    padding: 12px 14px;
+    font-size: 0.86rem;
+  }
+
+  .tradeoff-icon {
+    width: 52px;
+    height: 52px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2566,6 +2940,19 @@ h1 {
 
   .works-final-label {
     opacity: 1;
+  }
+
+  .roadmap-timeline {
+    --roadmap-progress: 100%;
+  }
+
+  .roadmap-note {
+    opacity: 1;
+    transform: none;
+  }
+
+  .stage-marker {
+    transform: none;
   }
 
   .highlight-card,

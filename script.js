@@ -18,6 +18,8 @@ const sloRouteEast = document.querySelector(".slo-route-east");
 const sloStations = Array.from(document.querySelectorAll(".slo-station"));
 const sloStepCards = Array.from(document.querySelectorAll("[data-slo-step]"));
 const revealItems = Array.from(document.querySelectorAll(".reveal, .reveal-card"));
+const roadmapTimeline = document.querySelector("[data-roadmap-timeline]");
+const roadmapStages = Array.from(document.querySelectorAll("[data-roadmap-stage]"));
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const compactSchematicQuery = window.matchMedia("(max-width: 980px)");
 
@@ -482,6 +484,52 @@ function setupHighlightCarousel() {
   updateCarouselState();
 }
 
+function updateRoadmapProgress() {
+  if (!roadmapTimeline || !roadmapStages.length) {
+    return;
+  }
+
+  const visibleCount = roadmapStages.filter((stage) => stage.classList.contains("is-visible")).length;
+  const progress = visibleCount ? (visibleCount / roadmapStages.length) * 100 : 0;
+
+  roadmapTimeline.style.setProperty("--roadmap-progress", `${progress}%`);
+  roadmapTimeline.classList.toggle("is-complete", visibleCount === roadmapStages.length);
+}
+
+function setupRoadmapTimeline() {
+  if (!roadmapTimeline || !roadmapStages.length) {
+    return;
+  }
+
+  if (reducedMotionQuery.matches || !("IntersectionObserver" in window)) {
+    roadmapStages.forEach((stage) => stage.classList.add("is-visible"));
+    updateRoadmapProgress();
+    return;
+  }
+
+  const roadmapObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        roadmapObserver.unobserve(entry.target);
+      });
+
+      updateRoadmapProgress();
+    },
+    {
+      threshold: 0.38,
+      rootMargin: "0px 0px -8% 0px",
+    },
+  );
+
+  roadmapStages.forEach((stage) => roadmapObserver.observe(stage));
+  updateRoadmapProgress();
+}
+
 async function setupPrecedentVisual() {
   const visual = document.querySelector(".precedent-visual[data-precedent-src]");
 
@@ -694,6 +742,8 @@ window.addEventListener("resize", () => {
 });
 reducedMotionQuery.addEventListener("change", () => {
   revealItems.forEach((item) => item.classList.add("is-visible"));
+  roadmapStages.forEach((stage) => stage.classList.add("is-visible"));
+  updateRoadmapProgress();
   document.querySelectorAll("[data-highlight-card]").forEach((card) => {
     activateHighlightCard(card, false);
   });
@@ -705,6 +755,7 @@ setupPrecedentVisual();
 setupRevealAnimations();
 setupHighlightCards();
 setupHighlightCarousel();
+setupRoadmapTimeline();
 setupPublicContent();
 setupCopyButtons();
 setupSloSchematic();
