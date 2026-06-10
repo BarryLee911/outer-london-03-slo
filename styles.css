@@ -730,46 +730,6 @@ h1 {
   line-height: 1.56;
 }
 
-.route-chip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  margin: 0 0 24px;
-}
-
-.route-chip span {
-  position: relative;
-  border: 1px solid rgba(240, 120, 42, 0.28);
-  border-radius: 8px;
-  background: rgba(240, 120, 42, 0.08);
-  color: var(--text-strong);
-  padding: 10px 12px;
-  font-size: 0.95rem;
-  font-weight: 760;
-  transition:
-    transform 180ms ease,
-    background-color 180ms ease,
-    border-color 180ms ease;
-}
-
-.route-chip span:not(:last-child)::after {
-  content: "→";
-  position: absolute;
-  right: -14px;
-  top: 50%;
-  transform: translateY(-52%);
-  color: rgba(16, 35, 63, 0.34);
-  font-weight: 800;
-  pointer-events: none;
-}
-
-.route-chip span:hover {
-  transform: translateY(-2px);
-  border-color: rgba(240, 120, 42, 0.45);
-  background: rgba(240, 120, 42, 0.13);
-}
-
 .works-schematic {
   min-height: 230vh;
   margin: 34px 0 32px;
@@ -780,11 +740,11 @@ h1 {
   top: 82px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 12px;
   align-content: center;
   align-items: center;
   width: min(100%, 1180px);
-  min-height: min(780px, calc(100vh - 112px));
+  min-height: min(760px, calc(100vh - 108px));
   margin: 0 auto;
 }
 
@@ -798,7 +758,7 @@ h1 {
 .works-copy {
   display: grid;
   justify-items: center;
-  gap: 10px;
+  gap: 8px;
   max-width: 760px;
   margin: 0 auto;
   padding: 0 18px;
@@ -808,7 +768,7 @@ h1 {
 .works-copy h3 {
   margin: 0;
   color: var(--text-strong);
-  font-size: 2.45rem;
+  font-size: 2.32rem;
   line-height: 1.05;
   letter-spacing: 0;
 }
@@ -822,19 +782,25 @@ h1 {
 
 .works-step-list {
   display: grid;
-  width: min(760px, 100%);
-  margin: 0 auto;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  z-index: 3;
+  width: min(640px, calc(100% - 40px));
+  margin: 0;
+  transform: translateX(-50%);
 }
 
 .works-step-card {
   grid-area: 1 / 1;
   display: grid;
   gap: 6px;
-  min-height: 126px;
-  padding: 18px 20px;
+  min-height: 104px;
+  padding: 14px 18px;
   border: 1px solid rgba(16, 35, 63, 0.1);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
   box-shadow: 0 18px 42px rgba(16, 35, 63, 0.08);
   opacity: 0;
   pointer-events: none;
@@ -868,23 +834,24 @@ h1 {
 .works-step-card h4 {
   margin: 0;
   color: var(--text-strong);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   line-height: 1.2;
 }
 
 .works-step-card p {
   color: var(--muted);
-  font-size: 0.93rem;
-  line-height: 1.48;
+  font-size: 0.88rem;
+  line-height: 1.42;
 }
 
 .works-diagram {
   display: grid;
   align-content: center;
-  gap: 12px;
+  gap: 0;
   min-width: 0;
   overflow: hidden;
-  padding: 18px;
+  position: relative;
+  padding: 14px 18px 162px;
   background:
     linear-gradient(135deg, rgba(16, 35, 63, 0.035), rgba(240, 120, 42, 0.05)),
     #fbfbfc;
@@ -895,8 +862,8 @@ h1 {
   width: 100%;
   height: auto;
   aspect-ratio: 1000 / 560;
-  max-height: 43vh;
-  min-height: 360px;
+  max-height: 40vh;
+  min-height: 330px;
   border-radius: 8px;
   background:
     radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.9), transparent 30%),
@@ -977,7 +944,7 @@ h1 {
   letter-spacing: 0;
 }
 
-.slo-station.is-reached circle:not(.station-pulse) {
+.slo-station.is-reached circle:not(.station-outer) {
   fill: #fff9f4;
   stroke-width: 6;
 }
@@ -986,35 +953,8 @@ h1 {
   stroke-width: 6;
 }
 
-.slo-station-join .station-outer,
-.slo-station-join .station-pulse {
+.slo-station-join .station-outer {
   fill: none;
-}
-
-.slo-station-join .station-pulse {
-  stroke: rgba(240, 120, 42, 0.45);
-  opacity: 0;
-  transform-origin: center;
-}
-
-.works-schematic.is-step-2 .station-pulse {
-  animation: sutton-pulse 1.35s ease-out infinite;
-}
-
-.works-schematic.is-complete .station-pulse {
-  animation: none;
-  opacity: 0;
-}
-
-@keyframes sutton-pulse {
-  0% {
-    opacity: 0.58;
-    transform: scale(0.76);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.28);
-  }
 }
 
 .works-start-note rect {
@@ -1061,25 +1001,30 @@ h1 {
 }
 
 .works-legend {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px 12px;
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  left: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 14px;
+  justify-content: center;
   color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.35;
+  font-size: 0.72rem;
+  line-height: 1.22;
 }
 
 .works-legend span {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .legend-line {
   display: inline-block;
   position: relative;
-  flex: 0 0 30px;
+  flex: 0 0 24px;
   height: 0;
   border-top: 4px solid rgba(111, 122, 137, 0.4);
   border-radius: 999px;
@@ -1106,9 +1051,9 @@ h1 {
 .legend-node {
   position: relative;
   display: inline-block;
-  flex: 0 0 16px;
-  width: 16px;
-  height: 16px;
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
   border: 3px solid var(--text-strong);
   border-radius: 50%;
   background: #fff;
@@ -1491,7 +1436,7 @@ h1 {
   }
 
   .works-diagram {
-    padding: 16px;
+    padding: 16px 16px 162px;
   }
 
   .works-legend {
@@ -1684,15 +1629,6 @@ h1 {
     font-weight: 760;
   }
 
-  .route-chip {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .route-chip span:not(:last-child)::after {
-    content: "";
-  }
-
   .precedent-visual,
   .precedent-placeholder {
     min-height: 260px;
@@ -1707,7 +1643,7 @@ h1 {
   }
 
   .works-diagram {
-    padding: 12px;
+    padding: 12px 12px 338px;
   }
 
   .works-svg {
@@ -1716,12 +1652,17 @@ h1 {
   }
 
   .works-legend {
-    grid-template-columns: 1fr;
+    justify-content: flex-start;
   }
 
   .works-step-card {
     min-height: 160px;
     padding: 16px;
+  }
+
+  .works-step-list {
+    bottom: 170px;
+    width: calc(100% - 28px);
   }
 
   .context-label {
@@ -1780,6 +1721,14 @@ h1 {
     min-height: 184px;
     padding: 12px;
   }
+
+  .works-diagram {
+    padding-bottom: 386px;
+  }
+
+  .works-step-list {
+    bottom: 176px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1813,11 +1762,6 @@ h1 {
   .reveal-card {
     opacity: 1;
     transform: none;
-  }
-
-  .works-schematic .station-pulse {
-    animation: none !important;
-    opacity: 0;
   }
 
   .works-final-label {
