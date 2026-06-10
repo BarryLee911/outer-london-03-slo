@@ -9,6 +9,7 @@ const heatmapSection = document.querySelector("#corridor");
 const heatmapCard = document.querySelector(".heatmap-card");
 const heatmapHotspots = Array.from(document.querySelectorAll(".heatmap-hotspot"));
 const sloSchematic = document.querySelector("[data-slo-schematic]");
+const sloDiagram = document.querySelector(".works-diagram");
 const sloRouteWest = document.querySelector(".slo-route-west");
 const sloRouteEast = document.querySelector(".slo-route-east");
 const sloStations = Array.from(document.querySelectorAll(".slo-station"));
@@ -148,10 +149,12 @@ function getSloSchematicProgress() {
 
   const rect = sloSchematic.getBoundingClientRect();
 
-  if (compactSchematicQuery.matches) {
-    const start = window.innerHeight * 0.72;
-    const end = -Math.min(window.innerHeight * 0.34, rect.height * 0.52);
-    return clamp((start - rect.top) / Math.max(1, start - end), 0, 1);
+  if (compactSchematicQuery.matches && sloDiagram) {
+    const diagramOffset = Math.max(0, sloDiagram.offsetTop - sloSchematic.offsetTop);
+    const stickyTop = Number.parseFloat(getComputedStyle(sloDiagram).top) || window.innerHeight * 0.14;
+    const stickyStart = Math.max(0, diagramOffset - stickyTop);
+    const stickyDrawDistance = Math.max(760, window.innerHeight * 0.92);
+    return clamp((-rect.top - stickyStart) / stickyDrawDistance, 0, 1);
   }
 
   const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
@@ -177,15 +180,20 @@ function setSloSchematicProgress(progress) {
   }
 
   /* Edit step timing here. The west leg finishes at Sutton before the east leg starts. */
+  const isCompactSchematic = compactSchematicQuery.matches;
+  const step2Start = isCompactSchematic ? 0.42 : 0.48;
+  const step3Start = isCompactSchematic ? 0.7 : 0.66;
+  const eastStart = isCompactSchematic ? 0.7 : 0.62;
+  const eastSpan = isCompactSchematic ? 0.26 : 0.32;
   const westProgress = clamp((progress - 0.08) / 0.36, 0, 1);
-  const eastProgress = clamp((progress - 0.62) / 0.32, 0, 1);
-  const activeStep = progress < 0.48 ? "1" : progress < 0.66 ? "2" : "3";
+  const eastProgress = clamp((progress - eastStart) / eastSpan, 0, 1);
+  const activeStep = progress < step2Start ? "1" : progress < step3Start ? "2" : "3";
 
   setPathDrawProgress(sloRouteWest, sloWestLength, westProgress);
   setPathDrawProgress(sloRouteEast, sloEastLength, eastProgress);
 
-  sloSchematic.classList.toggle("is-step-2", progress >= 0.48 && progress < 0.72);
-  sloSchematic.classList.toggle("is-shared-corridor", progress >= 0.66);
+  sloSchematic.classList.toggle("is-step-2", progress >= step2Start && progress < step3Start);
+  sloSchematic.classList.toggle("is-shared-corridor", progress >= step3Start);
   sloSchematic.classList.toggle("is-complete", progress >= 0.94);
 
   sloStepCards.forEach((card) => {

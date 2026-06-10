@@ -1442,10 +1442,11 @@ h1 {
   }
 
   .works-schematic {
-    min-height: auto;
+    min-height: 185vh;
   }
 
   .works-sticky {
+    display: contents;
     position: static;
     grid-template-columns: 1fr;
     min-height: 0;
@@ -1461,6 +1462,8 @@ h1 {
 
   .works-diagram {
     grid-template-columns: 1fr;
+    position: sticky;
+    top: calc(var(--nav-height) + 12px);
     padding: 14px;
   }
 
@@ -1688,6 +1691,7 @@ h1 {
   }
 
   .works-schematic {
+    min-height: 178vh;
     margin: 24px 0;
   }
 
@@ -1696,6 +1700,7 @@ h1 {
   }
 
   .works-diagram {
+    top: calc(var(--nav-height) + 8px);
     padding: 10px;
   }
 
