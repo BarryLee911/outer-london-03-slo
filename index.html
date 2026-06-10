@@ -8,7 +8,7 @@
       name="description"
       content="MVP route overlay for Outer London 03 — South London Orbital Link."
     />
-    <link rel="stylesheet" href="styles.css?v=20" />
+    <link rel="stylesheet" href="styles.css?v=23" />
   </head>
   <body>
     <a class="skip-link" href="#problem">Skip to project details</a>
@@ -210,7 +210,7 @@
           </div>
 
           <div class="journey-option-grid" aria-label="Journey comparison options">
-            <article class="journey-option-card journey-option-drive" data-journey-card>
+            <article class="journey-option-card journey-option-drive" data-journey-card="drive">
               <div class="journey-option-visual" aria-hidden="true">
                 <svg viewBox="0 0 120 58" focusable="false">
                   <path class="mini-route mini-route-drive" d="M12 40 C35 18 62 46 92 19 C101 12 110 12 114 14" />
@@ -227,7 +227,7 @@
               </div>
             </article>
 
-            <article class="journey-option-card journey-option-public" data-journey-card>
+            <article class="journey-option-card journey-option-public" data-journey-card="public">
               <div class="journey-option-visual" aria-hidden="true">
                 <svg viewBox="0 0 120 58" focusable="false">
                   <path class="mini-route mini-route-public" d="M14 42 C35 18 55 17 60 17 C78 17 82 37 105 20" />
@@ -247,7 +247,7 @@
               </div>
             </article>
 
-            <article class="journey-option-card journey-option-slo" data-journey-card>
+            <article class="journey-option-card journey-option-slo" data-journey-card="slo">
               <div class="journey-option-visual" aria-hidden="true">
                 <svg viewBox="0 0 120 58" focusable="false">
                   <path class="mini-route mini-route-slo" d="M12 36 C31 26 43 42 60 32 C78 22 91 34 108 20" />
@@ -271,7 +271,7 @@
             </article>
           </div>
 
-          <figure class="route-choice-panel reveal" aria-labelledby="route-choice-visual-title">
+          <figure class="route-choice-panel reveal" aria-labelledby="route-choice-visual-title" data-active-choice="public">
             <figcaption class="route-choice-sheet">
               <p class="eyebrow">Navigation-style comparison</p>
               <h3 id="route-choice-visual-title">Three route choices, one clearer orbital line</h3>
@@ -280,15 +280,27 @@
                 stations and five short inter-station sections, plus reduced interchange
                 penalty and a modest walking/waiting allowance.
               </p>
-              <div class="route-choice-tabs" aria-hidden="true">
-                <span class="is-active">Rail</span>
-                <span>Road</span>
-                <span>Future</span>
+              <div class="route-choice-tabs" role="group" aria-label="Spotlight route type">
+                <button class="is-active" type="button" data-route-choice-tab="public" aria-pressed="true">
+                  Rail
+                </button>
+                <button type="button" data-route-choice-tab="drive" aria-pressed="false">
+                  Road
+                </button>
+                <button type="button" data-route-choice-tab="slo" aria-pressed="false">
+                  Future
+                </button>
               </div>
-              <div class="route-choice-list" aria-hidden="true">
-                <span><strong>53 min</strong> Drive today</span>
-                <span><strong>70 min</strong> Public transport today</span>
-                <span class="is-slo"><strong>around 30 min</strong> SLO indicative target</span>
+              <div class="route-choice-list" aria-label="Route choice times">
+                <button type="button" data-route-choice-item="drive">
+                  <strong>53 min</strong> Drive today
+                </button>
+                <button class="is-active" type="button" data-route-choice-item="public">
+                  <strong>70 min</strong> Public transport today
+                </button>
+                <button class="is-slo" type="button" data-route-choice-item="slo">
+                  <strong>around 30 min</strong> SLO indicative target
+                </button>
               </div>
             </figcaption>
 
@@ -328,7 +340,7 @@
 
                 <path
                   class="choice-route choice-route-drive"
-                  data-choice-route
+                  data-choice-route="drive"
                   d="M92 388 C206 328, 267 428, 388 366 C510 302, 591 410, 704 342 C782 296, 852 294, 928 314"
                 />
                 <g class="choice-callout choice-drive-callout" aria-hidden="true">
@@ -338,7 +350,7 @@
 
                 <path
                   class="choice-route choice-route-public"
-                  data-choice-route
+                  data-choice-route="public"
                   d="M92 360 C188 270, 286 180, 424 160 C534 144, 625 182, 684 254 C760 347, 820 330, 928 268"
                 />
                 <g class="choice-interchange" aria-hidden="true" transform="translate(424 160)">
@@ -359,7 +371,7 @@
 
                 <path
                   class="choice-route choice-route-slo"
-                  data-choice-route
+                  data-choice-route="slo"
                   d="M92 384 C210 316, 291 383, 394 338 C497 294, 574 334, 656 302 C754 264, 831 276, 928 218"
                 />
                 <g class="choice-stations" aria-label="Future SLO station sequence">
@@ -980,6 +992,6 @@
       </section>
     </main>
 
-    <script src="script.js?v=20" defer></script>
+    <script src="script.js?v=23" defer></script>
   </body>
 </html>

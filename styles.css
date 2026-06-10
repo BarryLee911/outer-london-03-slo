@@ -1276,24 +1276,30 @@ h1 {
   z-index: 3;
   display: grid;
   align-content: start;
-  gap: 14px;
-  width: min(350px, calc(100% - 44px));
+  gap: 10px;
+  width: min(380px, calc(100% - 44px));
   min-width: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid rgba(255, 255, 255, 0.66);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.72);
   box-shadow:
     0 26px 72px rgba(16, 35, 63, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.86);
-  padding: 22px;
+  padding: 18px;
   backdrop-filter: blur(24px);
+  scrollbar-width: none;
+}
+
+.route-choice-sheet::-webkit-scrollbar {
+  display: none;
 }
 
 .route-choice-sheet h3 {
   margin: 0;
   color: var(--text-strong);
-  font-size: clamp(1.38rem, 2.3vw, 2.1rem);
+  font-size: clamp(1.34rem, 2.1vw, 1.95rem);
   line-height: 1.04;
   font-weight: 790;
 }
@@ -1301,8 +1307,8 @@ h1 {
 .route-choice-sheet p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.48;
+  font-size: 0.86rem;
+  line-height: 1.44;
 }
 
 .route-choice-tabs {
@@ -1314,14 +1320,36 @@ h1 {
   padding: 4px;
 }
 
-.route-choice-tabs span {
+.route-choice-tabs button {
+  appearance: none;
   display: grid;
   place-items: center;
   min-height: 34px;
+  border: 0;
   border-radius: 999px;
+  background: transparent;
   color: rgba(16, 35, 63, 0.58);
+  cursor: pointer;
+  font: inherit;
   font-size: 0.78rem;
   font-weight: 780;
+  letter-spacing: 0;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.route-choice-tabs button:hover,
+.route-choice-tabs button:focus-visible {
+  color: var(--text-strong);
+}
+
+.route-choice-tabs button:focus-visible,
+.route-choice-list button:focus-visible {
+  outline: 3px solid rgba(240, 120, 42, 0.28);
+  outline-offset: 2px;
 }
 
 .route-choice-tabs .is-active {
@@ -1336,16 +1364,39 @@ h1 {
   margin-top: 2px;
 }
 
-.route-choice-list span {
+.route-choice-list button {
+  appearance: none;
   display: grid;
+  width: 100%;
   gap: 3px;
   border: 1px solid rgba(16, 35, 63, 0.08);
   border-radius: 16px;
   background: rgba(247, 248, 250, 0.74);
   color: var(--muted);
-  padding: 12px 13px;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 12px;
+  text-align: left;
   font-size: 0.86rem;
   font-weight: 680;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.route-choice-list button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(16, 35, 63, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.route-choice-list button.is-active {
+  border-color: rgba(16, 35, 63, 0.16);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 24px rgba(16, 35, 63, 0.08);
 }
 
 .route-choice-list strong {
@@ -1361,6 +1412,11 @@ h1 {
 
 .route-choice-list .is-slo strong {
   color: var(--line);
+}
+
+.route-choice-list .is-slo.is-active {
+  border-color: rgba(240, 120, 42, 0.32);
+  background: rgba(255, 247, 241, 0.94);
 }
 
 .route-choice-map {
@@ -1461,6 +1517,35 @@ h1 {
 .journey-choice-section.is-animated .choice-route {
   opacity: 1;
   stroke-dashoffset: 0 !important;
+}
+
+.journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route.is-muted {
+  opacity: 0.22;
+}
+
+.journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route.is-focused {
+  opacity: 1;
+}
+
+.journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route-drive.is-focused {
+  stroke-width: 15;
+}
+
+.journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route-public.is-focused {
+  stroke-width: 14;
+}
+
+.journey-choice-section.is-animated .route-choice-panel.has-route-focus .choice-route-slo.is-focused {
+  stroke-width: 23;
+}
+
+.journey-option-card.is-route-choice-muted {
+  opacity: 0.72;
+}
+
+.journey-option-card.is-route-choice-active {
+  border-color: rgba(240, 120, 42, 0.28);
+  box-shadow: 0 18px 46px rgba(16, 35, 63, 0.1);
 }
 
 .choice-callout {
@@ -3482,7 +3567,7 @@ h1 {
     height: 330px;
   }
 
-  .route-choice-tabs span {
+  .route-choice-tabs button {
     min-height: 30px;
     font-size: 0.72rem;
   }

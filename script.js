@@ -491,6 +491,56 @@ function setupJourneyComparison() {
     return;
   }
 
+  const choicePanel = journeyCompare.querySelector(".route-choice-panel");
+  const choiceTabs = Array.from(journeyCompare.querySelectorAll("[data-route-choice-tab]"));
+  const choiceItems = Array.from(journeyCompare.querySelectorAll("[data-route-choice-item]"));
+  const journeyCards = Array.from(journeyCompare.querySelectorAll("[data-journey-card]"));
+  const availableChoices = new Set(["drive", "public", "slo"]);
+
+  const setActiveChoice = (choice, hasUserSelected = false) => {
+    if (!availableChoices.has(choice)) {
+      return;
+    }
+
+    const shouldSpotlight = hasUserSelected || choicePanel?.classList.contains("has-route-focus");
+
+    choicePanel?.setAttribute("data-active-choice", choice);
+    choicePanel?.classList.toggle("has-route-focus", shouldSpotlight);
+    journeyCompare.classList.toggle("has-choice-focus", shouldSpotlight);
+
+    choiceTabs.forEach((tab) => {
+      const isActive = tab.dataset.routeChoiceTab === choice;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+
+    choiceItems.forEach((item) => {
+      const isActive = item.dataset.routeChoiceItem === choice;
+      item.classList.toggle("is-active", isActive);
+      item.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+
+    journeyCards.forEach((card) => {
+      const isActive = card.dataset.journeyCard === choice;
+      card.classList.toggle("is-route-choice-active", shouldSpotlight && isActive);
+      card.classList.toggle("is-route-choice-muted", shouldSpotlight && !isActive);
+    });
+
+    journeyChoiceRoutes.forEach((route) => {
+      const isActive = route.dataset.choiceRoute === choice;
+      route.classList.toggle("is-focused", isActive);
+      route.classList.toggle("is-muted", shouldSpotlight && !isActive);
+    });
+  };
+
+  [...choiceTabs, ...choiceItems].forEach((control) => {
+    control.addEventListener("click", () => {
+      setActiveChoice(control.dataset.routeChoiceTab || control.dataset.routeChoiceItem, true);
+    });
+  });
+
+  setActiveChoice(choicePanel?.dataset.activeChoice || "public");
+
   journeyChoiceRoutes.forEach((route) => {
     const length = route.getTotalLength();
     route.style.strokeDasharray = `${length}`;
