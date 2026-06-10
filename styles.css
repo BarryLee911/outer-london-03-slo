@@ -784,7 +784,6 @@ h1 {
   display: grid;
   position: relative;
   z-index: 3;
-  align-self: center;
   width: 100%;
   min-width: 0;
   margin: 0;
@@ -859,6 +858,13 @@ h1 {
   background:
     linear-gradient(135deg, rgba(16, 35, 63, 0.035), rgba(240, 120, 42, 0.05)),
     #fbfbfc;
+}
+
+.works-side-panel {
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  min-width: 0;
 }
 
 .works-map-panel {
@@ -1012,15 +1018,12 @@ h1 {
 }
 
 .works-legend {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  left: auto;
+  position: static;
   display: flex;
   flex-wrap: wrap;
-  max-width: min(54%, 520px);
+  max-width: none;
   gap: 6px;
-  justify-content: flex-end;
+  justify-content: flex-start;
   color: var(--muted);
   font-size: 0.64rem;
   font-weight: 720;
@@ -1462,11 +1465,18 @@ h1 {
     padding: 14px;
   }
 
+  .works-side-panel {
+    display: contents;
+  }
+
   .works-legend {
+    position: absolute;
     top: 12px;
     right: 12px;
     bottom: auto;
+    left: auto;
     max-width: min(64%, 360px);
+    justify-content: flex-end;
     font-size: 0.62rem;
   }
 
