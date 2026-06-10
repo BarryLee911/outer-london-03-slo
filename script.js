@@ -9,7 +9,7 @@ const heatmapSection = document.querySelector("#corridor");
 const heatmapCard = document.querySelector(".heatmap-card");
 const heatmapHotspots = Array.from(document.querySelectorAll(".heatmap-hotspot"));
 const sloSchematic = document.querySelector("[data-slo-schematic]");
-const sloDiagram = document.querySelector(".works-diagram");
+const sloSticky = document.querySelector(".works-sticky");
 const sloRouteWest = document.querySelector(".slo-route-west");
 const sloRouteEast = document.querySelector(".slo-route-east");
 const sloStations = Array.from(document.querySelectorAll(".slo-station"));
@@ -149,12 +149,10 @@ function getSloSchematicProgress() {
 
   const rect = sloSchematic.getBoundingClientRect();
 
-  if (compactSchematicQuery.matches && sloDiagram) {
-    const diagramOffset = Math.max(0, sloDiagram.offsetTop - sloSchematic.offsetTop);
-    const stickyTop = Number.parseFloat(getComputedStyle(sloDiagram).top) || window.innerHeight * 0.14;
-    const stickyStart = Math.max(0, diagramOffset - stickyTop);
+  if (compactSchematicQuery.matches && sloSticky) {
+    const stickyTop = Number.parseFloat(getComputedStyle(sloSticky).top) || window.innerHeight * 0.14;
     const stickyDrawDistance = Math.max(760, window.innerHeight * 0.92);
-    return clamp((-rect.top - stickyStart) / stickyDrawDistance, 0, 1);
+    return clamp((stickyTop - rect.top) / stickyDrawDistance, 0, 1);
   }
 
   const scrollableDistance = Math.max(1, rect.height - window.innerHeight);

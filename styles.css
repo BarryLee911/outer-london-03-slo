@@ -1446,10 +1446,13 @@ h1 {
   }
 
   .works-sticky {
-    display: contents;
-    position: static;
+    position: sticky;
+    top: calc(var(--nav-height) + 12px);
+    display: grid;
     grid-template-columns: 1fr;
-    min-height: 0;
+    align-content: start;
+    gap: 12px;
+    min-height: auto;
   }
 
   .works-copy {
@@ -1457,13 +1460,13 @@ h1 {
   }
 
   .works-copy h3 {
-    font-size: 2.55rem;
+    font-size: 2.35rem;
   }
 
   .works-diagram {
     grid-template-columns: 1fr;
-    position: sticky;
-    top: calc(var(--nav-height) + 12px);
+    position: relative;
+    top: auto;
     padding: 14px;
   }
 
@@ -1691,16 +1694,25 @@ h1 {
   }
 
   .works-schematic {
-    min-height: 178vh;
+    min-height: 182vh;
     margin: 24px 0;
   }
 
+  .works-sticky {
+    top: calc(var(--nav-height) + 16px);
+    gap: 10px;
+  }
+
+  .works-copy .section-kicker {
+    display: none;
+  }
+
   .works-copy h3 {
-    font-size: 2.1rem;
+    font-size: 1.72rem;
+    line-height: 1.08;
   }
 
   .works-diagram {
-    top: calc(var(--nav-height) + 8px);
     padding: 10px;
   }
 
