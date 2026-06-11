@@ -3395,6 +3395,26 @@ a.sticky-scroll-cue.is-visible {
     height: 3px;
   }
 
+  .corridor-scroll-cue,
+  .works-scroll-cue {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+    left: 50%;
+    z-index: 12;
+    margin: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  .corridor-scroll-cue.is-visible,
+  .works-scroll-cue.is-visible {
+    transform: translate(-50%, 0);
+  }
+
+  .corridor-scroll-cue.is-complete,
+  .works-scroll-cue.is-complete {
+    transform: translate(-50%, 2px);
+  }
+
   .stats-grid,
   .card-grid.three-up,
   .metric-grid,
