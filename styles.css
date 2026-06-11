@@ -398,15 +398,6 @@ h1 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(14px);
-  transition:
-    opacity 320ms ease,
-    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.route-scene.hero-complete .hero-actions {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
@@ -457,12 +448,22 @@ h1 {
   backdrop-filter: blur(14px);
   font-size: 0.92rem;
   font-weight: 760;
+  opacity: 0;
+  pointer-events: none;
   text-decoration: none;
+  transform: translateY(10px);
   transition:
     background-color 180ms ease,
     box-shadow 180ms ease,
     color 180ms ease,
-    transform 180ms ease;
+    opacity 260ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.route-scene.hero-complete .hero-reference-link {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .hero-reference-link:hover,

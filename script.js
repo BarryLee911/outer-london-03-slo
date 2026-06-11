@@ -6,7 +6,7 @@ const routeShadow = document.querySelector(".route-shadow");
 const stations = Array.from(document.querySelectorAll(".station"));
 const completionLabel = document.querySelector("#completion-label");
 const heroActions = document.querySelector(".hero-actions");
-const heroActionLinks = Array.from(document.querySelectorAll(".hero-actions a"));
+const heroReferenceLink = document.querySelector(".hero-reference-link");
 const stickyCues = {
   hero: document.querySelector('[data-sticky-cue="hero"]'),
   corridor: document.querySelector('[data-sticky-cue="corridor"]'),
@@ -123,14 +123,13 @@ function setHeroComplete(isComplete) {
     return;
   }
 
-  heroActions.setAttribute("aria-hidden", isComplete ? "false" : "true");
-  heroActionLinks.forEach((link) => {
-    if (isComplete) {
-      link.removeAttribute("tabindex");
-    } else {
-      link.setAttribute("tabindex", "-1");
-    }
-  });
+  heroActions.setAttribute("aria-hidden", "false");
+
+  if (isComplete) {
+    heroReferenceLink?.removeAttribute("tabindex");
+  } else {
+    heroReferenceLink?.setAttribute("tabindex", "-1");
+  }
 }
 
 function setStickyCue(cue, progress, state = {}) {
@@ -228,7 +227,7 @@ function setRouteProgress(progress) {
   completionLabel.classList.toggle("is-visible", progress >= 0.985);
   setHeroComplete(progress >= 0.88);
   setStickyCue(stickyCues.hero, progress, {
-    visible: progress >= 0.88,
+    visible: true,
     completeAt: 0.985,
     meta: "Route drawing",
   });
